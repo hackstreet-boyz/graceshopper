@@ -14,3 +14,13 @@ router.get('/', async (req, res, next) => {
     next(error)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const item = OrderItem.findOrCreate(req.body)
+    const isNew = item[1]
+    /*...*/
+  } catch (error) {
+    next(error)
+  }
+})
