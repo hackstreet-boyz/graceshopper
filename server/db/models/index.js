@@ -9,6 +9,10 @@ const Product = require('./product')
  *    BlogPost.belongsTo(User)
  */
 
+User.hasMany(Order)
+Order.hasMany(OrderItem)
+Product.hasMany(OrderItem)
+
 Order.belongsTo(User) /*userId is in order table*/
 OrderItem.belongsTo(Order) /*orderId is in orderitem table*/
 OrderItem.belongsTo(Product) /*productId is in orderitem table*/
