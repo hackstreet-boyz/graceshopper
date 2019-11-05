@@ -43,10 +43,11 @@ const User = db.define('user', {
     defaultValue: false
   },
   creditcard: {
-    type: Sequelize.STRING,
-    validate: {
-      isCreditCard: true
-    }
+    type: Sequelize.STRING
+    // ,
+    // validate: {
+    //   isCreditCard: true
+    // }
   },
   salt: {
     type: Sequelize.STRING,
