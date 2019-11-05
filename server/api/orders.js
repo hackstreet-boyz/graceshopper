@@ -49,6 +49,8 @@ router.post('/', async (req, res, next) => {
       //   include: [{model: OrderItem}]
       // })
 
+      // const cart = [...orderToGet.orderitems]
+
       const itemToGet = await OrderItem.findOrCreate({
         where: {productId: req.body.productId}
       })
