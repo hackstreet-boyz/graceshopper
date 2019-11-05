@@ -7,14 +7,13 @@ class AllProducts extends React.Component {
     this.props.getAllProducts()
   }
   render() {
-    console.log('the Props are >>>>>', this.props)
     return <div />
   }
 }
 
 const mapStateToProps = state => {
   return {
-    AllProducts: state.AllProducts
+    allProducts: state.AllProducts
   }
 }
 
