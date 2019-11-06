@@ -27,6 +27,13 @@ export const getAllProductsThunk = () => {
   }
 }
 
+export const getSingleProductThunk = id => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/products/${id}`)
+    dispatch(gotSingleProduct(data))
+  }
+}
+
 const allProductsReducer = (state = [], action) => {
   switch (action.type) {
     case GOT_ALL_PRODUCTS:
