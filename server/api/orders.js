@@ -30,6 +30,7 @@ router.post('/', async (req, res, next) => {
     if (req.user) {
       res.send('Under construction')
     } else {
+      // may end up using more magic methods based off your belongs to many relationships
       const itemToGet = await OrderItem.findOrCreate({
         where: {productId: req.body.productId, orderId: req.body.orderId}
       })

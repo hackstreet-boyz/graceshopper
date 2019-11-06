@@ -60,6 +60,36 @@ const createApp = () => {
       saveUninitialized: false
     })
   )
+
+  app.use((req, res, next) => {
+    console.log(req.session)
+    next()
+  })
+  // session storage -> cart
+  /*
+
+  session store = {
+    cookieId : {
+
+    }
+  }
+
+  if they have a cookie ...
+
+
+  req.session = {
+    cart: {
+      product1Key: quantity
+    }
+  }
+
+
+  FROINTENDONLY
+  window.localStorage
+  window.sessionStorage
+
+  */
+
   app.use(passport.initialize())
   app.use(passport.session())
 

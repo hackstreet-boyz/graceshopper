@@ -10,6 +10,8 @@ const Product = require('./product')
  */
 
 User.hasMany(Order) /*userId is in order table*/
+
+// belongsToMany
 Order.hasMany(OrderItem) /*orderId is in orderitem*/
 Product.hasMany(OrderItem) /*productId is in orderitem table*/
 

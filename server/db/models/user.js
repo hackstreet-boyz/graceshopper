@@ -4,6 +4,7 @@ const db = require('../db')
 
 const User = db.define('user', {
   name: {
+    // firstName, lastName => fullName prototype method/virtual
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
@@ -18,6 +19,8 @@ const User = db.define('user', {
     }
   },
   photo: {
+    // isUrl
+    // their file name is super large, you might want ot change it to TEXT
     type: Sequelize.STRING,
     defaultValue: '/default-profile.jpg'
   },
@@ -25,6 +28,7 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
+    // isEmail
   },
   phone: {
     type: Sequelize.STRING,
@@ -44,6 +48,7 @@ const User = db.define('user', {
   },
   creditcard: {
     type: Sequelize.STRING
+    // warn against commented out code
     // ,
     // validate: {
     //   isCreditCard: true
