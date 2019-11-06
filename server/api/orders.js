@@ -12,7 +12,6 @@ router.get('/', async (req, res, next) => {
         })
       )
     } else {
-      //const guestId = ??
       res.send(
         await Order.findAll({
           where: {purchased: false},
@@ -25,18 +24,14 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/:userId', async (req, res, next) => {
   try {
-    if (req.user) {
-      res.send('Under construction')
-    } else {
-      const itemToGet = await OrderItem.findOrCreate({
-        where: {productId: req.body.productId, orderId: req.body.orderId}
-      })
-      const item = itemToGet[0]
-      await item.addItem(req.body.quantity)
-      res.status(201).send(item)
-    }
+    const itemToGet = await OrderItem.findOrCreate({
+      where: {productId: req.body.productId, orderId: req.body.orderId}
+    })
+    const item = itemToGet[0]
+    await item.addItem(req.body.quantity)
+    res.status(201).send(item)
   } catch (error) {
     next(error)
   }
@@ -44,17 +39,53 @@ router.post('/', async (req, res, next) => {
 
 router.put('/', async (req, res, next) => {
   try {
-    if (req.user) {
-      res.send('Under construction')
-    } else {
-      const itemToUpdate = await OrderItem.update(
-        {quantity: req.body.quantity},
-        {
-          where: {productId: req.body.productId, orderId: req.body.orderId}
+    const itemToUpdate = await OrderItem.update(
+      {quantity: req.body.quantity},
+      {
+        where: {productId: req.body.productId, orderId: req.body.orderId}
+      }
+    )
+    res.send(itemToUpdate)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    await OrderItem.destroy({
+      where: {productId: req.body.productId, orderId: req.body.orderId}
+    })
+    res.status(201).send()
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:userId/order', async (req, res, next) => {
+  try {
+    const purchasedUpdate = await Order.update(
+      {purchased: true},
+      {
+        where: {
+          id: req.params.userId,
+          purchased: false
         }
-      )
-      res.send(itemToUpdate)
-    }
+      }
+    )
+    res.send(purchasedUpdate)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/:userId/order', async (req, res, next) => {
+  try {
+    const newCart = await Order.create({
+      purchased: false,
+      userId: req.params.userId
+    })
+    res.send(newCart)
   } catch (error) {
     next(error)
   }
