@@ -65,7 +65,7 @@ router.delete('/:userId', async (req, res, next) => {
     await OrderItem.destroy({
       where: {productId: req.body.productId, orderId: req.body.orderId}
     })
-    res.sendStatus(204)
+    res.status(201).send()
   } catch (error) {
     next(error)
   }
