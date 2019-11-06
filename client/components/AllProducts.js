@@ -6,21 +6,33 @@ class AllProducts extends React.Component {
   componentDidMount() {
     this.props.getAllProducts()
   }
+
   render() {
-    console.log('HELLLOOO', this.props)
-    return (
+    this.props.allProducts
+      ? console.log('THIS IS PROPS', this.props)
+      : console.log('nope')
+
+    return this.props.allProducts && this.props.allProducts[0] ? (
       <div>
-        {this.props.allProducts.lenght > 0 && (
-          <h2>You have {this.props.AllProducts.name} unread messages.</h2>
-        )}
+        <h1>HELLO FRIENDS</h1>
+        {this.props.allProducts.map(product => (
+          <div>
+            <ul>
+              <li key={product.id}>
+                {product.name}{' '}
+                <img src={product.imageUrl} height="140" width="100" />
+              </li>
+            </ul>
+          </div>
+        ))}
       </div>
-    )
+    ) : null
   }
 }
 
 const mapStateToProps = state => {
   return {
-    allProducts: state.AllProducts
+    allProducts: state.products.allProducts
   }
 }
 
