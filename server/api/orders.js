@@ -59,3 +59,43 @@ router.put('/', async (req, res, next) => {
     next(error)
   }
 })
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    await OrderItem.destroy({
+      where: {productId: req.body.productId, orderId: req.body.orderId}
+    })
+    res.status(201).send()
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:userId/order', async (req, res, next) => {
+  try {
+    const purchasedUpdate = await Order.update(
+      {purchased: true},
+      {
+        where: {
+          id: req.params.userId,
+          purchased: false
+        }
+      }
+    )
+    res.send(purchasedUpdate)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/:userId/order', async (req, res, next) => {
+  try {
+    const newCart = await Order.create({
+      purchased: false,
+      userId: req.params.userId
+    })
+    res.send(newCart)
+  } catch (error) {
+    next(error)
+  }
+})
