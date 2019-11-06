@@ -8,4 +8,8 @@ const OrderItem = db.define('orderitems', {
   }
 })
 
+OrderItem.prototype.addItem = function(numAddedToCart) {
+  this.update({quantity: (this.quantity += numAddedToCart)})
+}
+
 module.exports = OrderItem

@@ -28,18 +28,26 @@ async function seed() {
 
   const products = await Promise.all([
     Product.create({
-      name: 'TP',
+      name: 'Nick',
       price: 100,
       brand: 'Charmin',
-      description: 'soft as Charmin, just like you',
+      description: 'As long as you love me',
       category: 'Household',
       quantity: 100
     }),
     Product.create({
-      name: 'Tissues',
+      name: 'AJ',
       price: 100,
       brand: 'Kleenex',
-      description: 'cry harder',
+      description: 'Show me the meaning of being lonely',
+      category: 'Household',
+      quantity: 100
+    }),
+    Product.create({
+      name: 'Howie',
+      price: 100,
+      brand: 'Bounty',
+      description: 'I want it that way',
       category: 'Household',
       quantity: 100
     })

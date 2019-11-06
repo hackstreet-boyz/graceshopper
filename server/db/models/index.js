@@ -9,9 +9,9 @@ const Product = require('./product')
  *    BlogPost.belongsTo(User)
  */
 
-Order.belongsTo(User) /*userId is in order table*/
-OrderItem.belongsTo(Order) /*orderId is in orderitem table*/
-OrderItem.belongsTo(Product) /*productId is in orderitem table*/
+User.hasMany(Order) /*userId is in order table*/
+Order.hasMany(OrderItem) /*orderId is in orderitem*/
+Product.hasMany(OrderItem) /*productId is in orderitem table*/
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
