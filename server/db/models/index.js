@@ -10,8 +10,9 @@ const Product = require('./product')
  */
 
 User.hasMany(Order) /*userId is in order table*/
-Order.hasMany(OrderItem) /*orderId is in orderitem*/
-Product.hasMany(OrderItem) /*productId is in orderitem table*/
+
+Order.belongsToMany(Product, {through: OrderItem})
+Product.belongsToMany(Order, {through: OrderItem})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
