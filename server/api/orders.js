@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, OrderItem} = require('../db/models')
+const {Order, OrderItem, Product} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
       res.send(
         await Order.findAll({
           where: {purchased: false, userId: req.user.id},
-          include: [{model: OrderItem}]
+          include: [{model: Product}]
         })
       )
     } else {
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
       res.send(
         await Order.findAll({
           where: {purchased: false},
-          include: [{model: OrderItem}]
+          include: [{model: Product}]
         })
       )
     }
@@ -36,6 +36,24 @@ router.post('/', async (req, res, next) => {
       const item = itemToGet[0]
       await item.addItem(req.body.quantity)
       res.status(201).send(item)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/', async (req, res, next) => {
+  try {
+    if (req.user) {
+      res.send('Under construction')
+    } else {
+      const itemToUpdate = await OrderItem.update(
+        {quantity: req.body.quantity},
+        {
+          where: {productId: req.body.productId, orderId: req.body.orderId}
+        }
+      )
+      res.send(itemToUpdate)
     }
   } catch (error) {
     next(error)

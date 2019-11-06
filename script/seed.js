@@ -33,7 +33,7 @@ async function seed() {
       brand: 'Charmin',
       description: 'As long as you love me',
       category: 'Household',
-      quantity: 100
+      stock: 100
     }),
     Product.create({
       name: 'AJ',
@@ -41,7 +41,7 @@ async function seed() {
       brand: 'Kleenex',
       description: 'Show me the meaning of being lonely',
       category: 'Household',
-      quantity: 100
+      stock: 100
     }),
     Product.create({
       name: 'Howie',
@@ -49,7 +49,7 @@ async function seed() {
       brand: 'Bounty',
       description: 'I want it that way',
       category: 'Household',
-      quantity: 100
+      stock: 100
     })
   ])
 
