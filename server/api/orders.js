@@ -2,7 +2,7 @@ const router = require('express').Router()
 const {Order, OrderItem, Product} = require('../db/models')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
     if (req.user) {
       res.send(
@@ -37,7 +37,7 @@ router.post('/:userId', async (req, res, next) => {
   }
 })
 
-router.put('/', async (req, res, next) => {
+router.put('/:userId', async (req, res, next) => {
   try {
     const itemToUpdate = await OrderItem.update(
       {quantity: req.body.quantity},

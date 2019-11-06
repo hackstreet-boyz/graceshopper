@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getAllProductsThunk} from './store/products'
+import {getAllProductsThunk} from '../store/products'
 
 class AllProducts extends React.Component {
   componentDidMount() {
