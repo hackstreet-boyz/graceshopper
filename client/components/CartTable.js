@@ -24,23 +24,15 @@ const CartTable = props => {
                 type="submit"
                 onClick={() => props.decrease(product.orderitems)}
               >
-                {' '}
-                -{' '}
+                -
               </button>
               {` ${product.orderitems.quantity} `}
               <button
                 type="submit"
                 onClick={() => props.increase(product.orderitems)}
               >
-                {' '}
-                +{' '}
+                +
               </button>
-              {/* <input
-                name="quantity"
-                type="text"
-                value={product.orderitems.quantity}
-                onChange={props.handleChange}
-              /> */}
             </td>
             <td>{`$${product.orderitems.quantity * product.price / 100}`}</td>
             <td>
