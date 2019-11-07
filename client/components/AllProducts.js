@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getAllProductsThunk} from '../store/products'
+import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -16,9 +17,9 @@ class AllProducts extends React.Component {
                 <ul>
                   <li>
                     {product.name}
-                    <a>
+                    <Link to={`/products/${product.id}`}>
                       <img src={product.imageUrl} height="140" width="100" />
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
