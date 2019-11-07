@@ -9,7 +9,8 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({
-      name: 'Luis',
+      firstName: 'Luis',
+      lastName: 'Bello',
       address: '123 Main Street',
       email: 'luis@email.com',
       phone: '555-555-5555',
@@ -17,7 +18,8 @@ async function seed() {
       creditcard: '1234567890123456'
     }),
     User.create({
-      name: 'Jake',
+      firstName: 'Jake',
+      lastName: 'Roth',
       address: '123 Main Street',
       email: 'jake@email.com',
       phone: '555-555-5555',
@@ -28,27 +30,28 @@ async function seed() {
 
   const products = await Promise.all([
     Product.create({
-      name: 'Nick',
-      price: 100,
-      brand: 'Charmin',
-      description: 'As long as you love me',
-      category: 'Household',
+      name: 'Tabasco',
+      price: 2,
+      brand: 'Tabasco Factories Unlimited',
+      description: 'Not so hot, but very tasty!',
+      category: 'Condiments',
       stock: 100
     }),
     Product.create({
-      name: 'AJ',
-      price: 100,
-      brand: 'Kleenex',
-      description: 'Show me the meaning of being lonely',
-      category: 'Household',
+      name: 'Sriracha',
+      price: 4.5,
+      brand: 'Huy Fong Foods',
+      description:
+        "Made in eastern Thailand, it's the finest hot sauce in the world",
+      category: 'Condiments',
       stock: 100
     }),
     Product.create({
-      name: 'Howie',
-      price: 100,
-      brand: 'Bounty',
+      name: 'Soy Saunce',
+      price: 3.99,
+      brand: 'Kikkoman Sauces',
       description: 'I want it that way',
-      category: 'Household',
+      category: 'Cooking',
       stock: 100
     })
   ])
