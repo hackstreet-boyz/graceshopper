@@ -1,17 +1,22 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
 import {getItemsFromCart, submitOrderThunk} from '../store/cart'
 
 class Cart extends React.Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     if (this.props.user) {
       this.props.getItemsFromCart(this.props.user)
     }
+  }
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value})
   }
   handleSubmit(event) {
     event.preventDefault()
@@ -35,15 +40,22 @@ class Cart extends React.Component {
               <tr key={product.id}>
                 <td>{index + 1}</td>
                 <td>{product.name}</td>
-                <td>{product.orderitems.quantity}</td>
+                <td>
+                  <input
+                    name="quantity"
+                    type="text"
+                    value={product.orderitems.quantity}
+                    onChange={this.handleChange}
+                  />
+                </td>
                 <td>{product.price}</td>
               </tr>
             ))}
           </tbody>
         </Table>
-        <button type="submit" onClick={this.handleSubmit}>
+        <Button variant="primary" type="submit" onClick={this.handleSubmit}>
           Checkout
-        </button>
+        </Button>
       </div>
     ) : null
   }
