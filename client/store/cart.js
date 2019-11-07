@@ -3,6 +3,7 @@ import axios from 'axios'
 /*ACTION TYPES*/
 const GOT_ITEMS_FROM_CART = 'GOT_ITEMS_FROM_CART'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
+const ADD_ITEMS_TO_CART = 'ADD_ITEMS_TO_CART'
 
 /*INITIAL STATE*/
 const initialState = []
@@ -18,7 +19,19 @@ export const updateQuantity = quantity => ({
   quantity
 })
 
+const addItemToCart = item => ({
+  type: ADD_ITEMS_TO_CART,
+  item
+})
+
 /*THUNKS*/
+export const addItemToCartThunk = (userId, newData) => {
+  return async dispatch => {
+    const {data} = await axios.post(`/api/cart/${userId}`, newData)
+    dispatch(addItemToCart(data))
+  }
+}
+
 export const getItemsFromCart = user => {
   return async dispatch => {
     try {
