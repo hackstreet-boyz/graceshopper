@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
@@ -16,7 +16,8 @@ class Cart extends React.Component {
     }
   }
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value})
+    console.log('this.props:', this.props)
+    this.props.updateQuantity(event.target.value)
   }
   handleSubmit(event) {
     event.preventDefault()
@@ -48,7 +49,7 @@ class Cart extends React.Component {
                     onChange={this.handleChange}
                   />
                 </td>
-                <td>{product.price}</td>
+                <td>{`$${product.orderitems.quantity * product.price}`}</td>
               </tr>
             ))}
           </tbody>

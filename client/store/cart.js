@@ -1,8 +1,8 @@
 import axios from 'axios'
-import {combineReducers} from 'redux'
 
 /*ACTION TYPES*/
 const GOT_ITEMS_FROM_CART = 'GOT_ITEMS_FROM_CART'
+const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 
 /*INITIAL STATE*/
 const initialState = []
@@ -11,6 +11,11 @@ const initialState = []
 const gotItemsFromCart = items => ({
   type: GOT_ITEMS_FROM_CART,
   items
+})
+
+export const updateQuantity = quantity => ({
+  type: UPDATE_QUANTITY,
+  quantity
 })
 
 /*THUNKS*/
@@ -46,6 +51,8 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case GOT_ITEMS_FROM_CART:
       return action.items
+    case UPDATE_QUANTITY:
+      return action.quantity
     default:
       return state
   }
