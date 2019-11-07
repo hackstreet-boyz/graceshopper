@@ -26,8 +26,11 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/:userId', async (req, res, next) => {
   try {
+    const currCartOrder = await Order.findOne({
+      where: {userId: req.params.userId, purchased: false}
+    })
     const itemToGet = await OrderItem.findOrCreate({
-      where: {productId: req.body.productId, orderId: req.body.orderId}
+      where: {productId: req.body.productId, orderId: currCartOrder.id}
     })
     const item = itemToGet[0]
     await item.addItem(req.body.quantity)
@@ -64,6 +67,15 @@ router.delete('/:userId', async (req, res, next) => {
 
 router.put('/:userId/order', async (req, res, next) => {
   try {
+    // const orderProducts = await Order.findAll({
+    //   where: {
+    //     userId: req.params.userId,
+    //     purchased: false
+    //   },
+    //   include: [{model: Product}]
+    // // })
+    // const currOrder = await Order.findOne({where: {userId: req.params.userId, purchased: false}})
+    // const orderItems = await OrderItem.findAll({where: {orderId: currOrder.id}})
     const purchasedUpdate = await Order.update(
       {purchased: true},
       {

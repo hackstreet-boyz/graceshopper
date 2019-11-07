@@ -5,6 +5,7 @@ import {combineReducers} from 'redux'
 
 const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
 const GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT'
+// const GOT_ORDERITEMS = 'GOT_ORDER_ITEMS'
 
 const gotAllProducts = allProducts => {
   return {
@@ -12,6 +13,20 @@ const gotAllProducts = allProducts => {
     allProducts
   }
 }
+
+// const gotOrderItems= (orderItems) =>{
+//   return{
+//     type: GOT_ORDERITEMS,
+//     orderItems
+//   }
+// }
+
+// export const gotOrderItemsThunk= () =>{
+//   return async dispatch =>{
+//     const {data} = await axios.get('/api/cart/test')
+//     dispatch(gotOrderItems(data))
+//   }
+// }
 
 const gotSingleProduct = singleProduct => {
   return {
@@ -43,6 +58,15 @@ const allProductsReducer = (state = [], action) => {
   }
 }
 
+// const orderItemsReducer = (state = [], action) => {
+//   switch (action.type) {
+//     case GOT_ORDERITEMS:
+//       return action.orderItems
+//     default:
+//       return state
+//   }
+// }
+
 const singleProductReducer = (state = {}, action) => {
   switch (action.type) {
     case GOT_SINGLE_PRODUCT:
@@ -55,4 +79,5 @@ const singleProductReducer = (state = {}, action) => {
 export default combineReducers({
   allProducts: allProductsReducer,
   singleProduct: singleProductReducer
+  // orderItems: orderItemsReducer
 })
