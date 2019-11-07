@@ -5,7 +5,8 @@ import Button from 'react-bootstrap/Button'
 import {
   getItemsFromCart,
   submitOrderThunk,
-  increaseQuantity
+  increaseQuantity,
+  decreaseQuantity
 } from '../store/cart'
 import CartTable from './CartTable'
 
@@ -14,6 +15,7 @@ class Cart extends React.Component {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
     this.increase = this.increase.bind(this)
+    this.decrease = this.decrease.bind(this)
   }
 
   componentDidMount() {
@@ -31,13 +33,19 @@ class Cart extends React.Component {
     this.props.increaseQuantity(this.props.user, item)
   }
 
-  decreaseQuantity() {}
+  decrease(item) {
+    this.props.decreaseQuantity(this.props.user, item)
+  }
 
   render() {
-    console.log('this.props:', this.props)
     return this.props.cart && this.props.cart[0] ? (
       <div>
-        <CartTable cart={this.props.cart} increase={this.increase} />
+        <CartTable
+          cart={this.props.cart}
+          item={this.props.item}
+          increase={this.increase}
+          decrease={this.decrease}
+        />
         <Button variant="primary" type="submit" onClick={this.handleSubmit}>
           Checkout
         </Button>
@@ -48,7 +56,8 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart,
+    cart: state.cart.items,
+    item: state.cart.item,
     user: state.user
   }
 }
@@ -57,7 +66,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getItemsFromCart: user => dispatch(getItemsFromCart(user)),
     submitOrder: user => dispatch(submitOrderThunk(user)),
-    increaseQuantity: (user, item) => dispatch(increaseQuantity(user, item))
+    increaseQuantity: (user, item) => dispatch(increaseQuantity(user, item)),
+    decreaseQuantity: (user, item) => dispatch(decreaseQuantity(user, item))
   }
 }
 

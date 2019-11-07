@@ -20,7 +20,13 @@ const CartTable = props => {
             <td>{index + 1}</td>
             <td>{product.name}</td>
             <td>
-              <button type="submit"> - </button>
+              <button
+                type="submit"
+                onClick={() => props.decrease(product.orderitems)}
+              >
+                {' '}
+                -{' '}
+              </button>
               {` ${product.orderitems.quantity} `}
               <button
                 type="submit"
