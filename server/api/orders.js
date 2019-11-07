@@ -2,6 +2,15 @@ const router = require('express').Router()
 const {Order, OrderItem, Product} = require('../db/models')
 module.exports = router
 
+// router.get('/test', async(req,res,next)=>{
+//   try {
+//     const testing = await OrderItem.findAll()
+//     res.send(testing)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
+
 router.get('/:userId', async (req, res, next) => {
   try {
     if (req.user) {
