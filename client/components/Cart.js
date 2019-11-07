@@ -2,58 +2,42 @@ import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
-import {getItemsFromCart, submitOrderThunk} from '../store/cart'
+import {
+  getItemsFromCart,
+  submitOrderThunk,
+  increaseQuantity
+} from '../store/cart'
+import CartTable from './CartTable'
 
 class Cart extends React.Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.increase = this.increase.bind(this)
   }
+
   componentDidMount() {
     if (this.props.user) {
       this.props.getItemsFromCart(this.props.user)
     }
   }
-  handleChange(event) {
-    console.log('this.props:', this.props)
-    this.props.updateQuantity(event.target.value)
-  }
+
   handleSubmit(event) {
     event.preventDefault()
     this.props.submitOrder(this.props.user)
   }
+
+  increase(item) {
+    this.props.increaseQuantity(this.props.user, item)
+  }
+
+  decreaseQuantity() {}
+
   render() {
     console.log('this.props:', this.props)
     return this.props.cart && this.props.cart[0] ? (
       <div>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.cart[0].products.map((product, index) => (
-              <tr key={product.id}>
-                <td>{index + 1}</td>
-                <td>{product.name}</td>
-                <td>
-                  <input
-                    name="quantity"
-                    type="text"
-                    value={product.orderitems.quantity}
-                    onChange={this.handleChange}
-                  />
-                </td>
-                <td>{`$${product.orderitems.quantity * product.price}`}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <CartTable cart={this.props.cart} increase={this.increase} />
         <Button variant="primary" type="submit" onClick={this.handleSubmit}>
           Checkout
         </Button>
@@ -72,7 +56,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getItemsFromCart: user => dispatch(getItemsFromCart(user)),
-    submitOrder: user => dispatch(submitOrderThunk(user))
+    submitOrder: user => dispatch(submitOrderThunk(user)),
+    increaseQuantity: (user, item) => dispatch(increaseQuantity(user, item))
   }
 }
 

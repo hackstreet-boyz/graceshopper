@@ -14,9 +14,9 @@ const gotItemsFromCart = items => ({
   items
 })
 
-export const updateQuantity = quantity => ({
+const updateQuantity = item => ({
   type: UPDATE_QUANTITY,
-  quantity
+  item
 })
 
 const addItemToCart = item => ({
@@ -59,13 +59,29 @@ export const submitOrderThunk = user => {
   }
 }
 
+export const increaseQuantity = (user, item) => {
+  return async dispatch => {
+    try {
+      const dataToSend = {
+        quantity: (item.quantity += 1),
+        productId: item.productId,
+        orderId: item.orderId
+      }
+      const {data} = await axios.put(`/api/cart/${user.id}`, dataToSend)
+      dispatch(updateQuantity(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 /*REDUCERS*/
 export default function(state = initialState, action) {
   switch (action.type) {
     case GOT_ITEMS_FROM_CART:
       return action.items
     case UPDATE_QUANTITY:
-      return action.quantity
+      return action.item
     default:
       return state
   }
