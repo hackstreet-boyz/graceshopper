@@ -13,10 +13,12 @@ class SingleProduct extends React.Component {
   }
 
   handleSubmit() {
-    console.log(this.props.singleproduct)
-    console.log(this.props.userId)
-    console.log(this.props.state)
-    this.props.addItemToCart(this.props.userId, this.props.singleproduct)
+    const putInCart = {
+      orderId: this.props.singleproduct.orders[0].orderitems.orderId,
+      productId: this.props.match.params.productId,
+      quantity: 1
+    }
+    this.props.addItemToCart(this.props.userId, putInCart)
   }
 
   render() {
@@ -47,8 +49,7 @@ class SingleProduct extends React.Component {
 const mapStateToProps = state => {
   return {
     userId: state.user.id,
-    singleproduct: state.products.singleProduct,
-    state: state
+    singleproduct: state.products.singleProduct
   }
 }
 
