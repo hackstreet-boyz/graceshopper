@@ -19,7 +19,7 @@ class AllProducts extends React.Component {
           <div>
             <ul>
               <li key={product.id}>
-                {product.name}{' '}
+                {product.name}
                 <img src={product.imageUrl} height="140" width="100" />
               </li>
             </ul>
