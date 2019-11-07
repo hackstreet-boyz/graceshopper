@@ -5,6 +5,9 @@ const Order = db.define('orders', {
   purchased: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  totalPrice: {
+    type: Sequelize.INTEGER
   }
 })
 
