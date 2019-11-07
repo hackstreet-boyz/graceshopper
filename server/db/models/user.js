@@ -3,7 +3,14 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
-  name: {
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  lastName: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
@@ -101,3 +108,7 @@ User.beforeUpdate(setSaltAndPassword)
 User.beforeBulkCreate(users => {
   users.forEach(setSaltAndPassword)
 })
+
+User.prototype.getFullName = function() {
+  return this.firstName + ' ' + this.lastName
+}
