@@ -6,7 +6,6 @@ class AllProducts extends React.Component {
   componentDidMount() {
     this.props.getAllProducts()
   }
-
   render() {
     this.props.allProducts
       ? console.log('THIS IS PROPS', this.props)
@@ -32,7 +31,7 @@ class AllProducts extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    allProducts: state.products.allProducts
+    allProducts: state.AllProducts
   }
 }
 
