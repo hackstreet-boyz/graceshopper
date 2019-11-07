@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Product = require('../db/models/product')
+const {Order} = require('../db/models/')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -17,7 +18,8 @@ router.get('/', async (req, res, next) => {
 router.get('/:productId', async (req, res, next) => {
   try {
     const singleProduct = await Product.findOne({
-      where: {id: req.params.productId}
+      where: {id: req.params.productId},
+      include: [{model: Order}]
     })
     if (singleProduct) {
       res.send(singleProduct)

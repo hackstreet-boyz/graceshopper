@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getSingleProductThunk} from '../store/products'
+import {getSingleProductThunk, gotOrderItemsThunk} from '../store/products'
 import {addItemToCartThunk} from '../store/cart'
+import axios from 'axios'
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -10,13 +11,19 @@ class SingleProduct extends React.Component {
   }
   componentDidMount() {
     this.props.getSingleProduct(this.props.match.params.productId)
+    // this.props.gotOrderItems()
+    // const {data} =axios.get('/api/cart/test')
+    // console.log(data)
   }
 
   handleSubmit() {
-    console.log(this.props.singleproduct)
-    console.log(this.props.userId)
     console.log(this.props.state)
-    this.props.addItemToCart(this.props.userId, this.props.singleproduct)
+    const putInCart = {
+      // orderId: this.props.singleProduct.orders[0].id,
+      productId: this.props.match.params.productId,
+      quantity: 1
+    }
+    this.props.addItemToCart(this.props.userId, putInCart)
   }
 
   render() {
@@ -29,8 +36,9 @@ class SingleProduct extends React.Component {
       description,
       category,
       stock
-    } = this.props.singleproduct
-    return (
+    } = this.props.singleProduct
+    console.log('THIS IS SINGLE PRODUCT', this.props.singleProduct)
+    return this.props.singleProduct ? (
       <div>
         <h1>{name}</h1>
         <img src={imageUrl} height="150" width="150" />
@@ -38,16 +46,18 @@ class SingleProduct extends React.Component {
         <p>{brand}</p>
         <p>{description}</p>
         <p>{category}</p>
-        <button type="button" onClick={this.handleSubmit} />
+        <button type="button" onClick={this.handleSubmit}>
+          ADD ITEM
+        </button>
       </div>
-    )
+    ) : null
   }
 }
 
 const mapStateToProps = state => {
   return {
     userId: state.user.id,
-    singleproduct: state.products.singleProduct,
+    singleProduct: state.products.singleProduct,
     state: state
   }
 }
@@ -56,6 +66,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: id => dispatch(getSingleProductThunk(id)),
     addItemToCart: (id, item) => dispatch(addItemToCartThunk(id, item))
+    // gotOrderItems: () => dispatch(gotOrderItemsThunk())
   }
 }
 
