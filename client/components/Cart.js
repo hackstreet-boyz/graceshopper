@@ -6,7 +6,8 @@ import {
   getItemsFromCart,
   submitOrderThunk,
   increaseQuantity,
-  decreaseQuantity
+  decreaseQuantity,
+  removeItem
 } from '../store/cart'
 import CartTable from './CartTable'
 
@@ -16,6 +17,7 @@ class Cart extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.increase = this.increase.bind(this)
     this.decrease = this.decrease.bind(this)
+    this.remove = this.remove.bind(this)
   }
 
   componentDidMount() {
@@ -37,6 +39,10 @@ class Cart extends React.Component {
     this.props.decreaseQuantity(this.props.user, item)
   }
 
+  remove(item) {
+    this.props.removeItem(this.props.user, item)
+  }
+
   render() {
     return this.props.cart && this.props.cart[0] ? (
       <div>
@@ -45,6 +51,7 @@ class Cart extends React.Component {
           item={this.props.item}
           increase={this.increase}
           decrease={this.decrease}
+          remove={this.remove}
         />
         <Button variant="primary" type="submit" onClick={this.handleSubmit}>
           Checkout
@@ -67,7 +74,8 @@ const mapDispatchToProps = dispatch => {
     getItemsFromCart: user => dispatch(getItemsFromCart(user)),
     submitOrder: user => dispatch(submitOrderThunk(user)),
     increaseQuantity: (user, item) => dispatch(increaseQuantity(user, item)),
-    decreaseQuantity: (user, item) => dispatch(decreaseQuantity(user, item))
+    decreaseQuantity: (user, item) => dispatch(decreaseQuantity(user, item)),
+    removeItem: (user, item) => dispatch(removeItem(user, item))
   }
 }
 
