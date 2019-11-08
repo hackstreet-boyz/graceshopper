@@ -18,8 +18,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:productId', async (req, res, next) => {
   try {
     const singleProduct = await Product.findOne({
-      where: {id: req.params.productId},
-      include: [{model: Order}]
+      where: {id: req.params.productId}
     })
     if (singleProduct) {
       res.send(singleProduct)
