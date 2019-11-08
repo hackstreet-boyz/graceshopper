@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
+const {adminGate, userAdminGate} = require('./security')
 
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', adminGate, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -12,6 +13,21 @@ router.get('/', async (req, res, next) => {
       attributes: ['id', 'email']
     })
     res.json(users)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:id', userAdminGate, async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id, {
+      attributes: ['id', 'email']
+    })
+    if (user) {
+      res.send(user)
+    } else {
+      res.status(404).send('This user doesnt exist')
+    }
   } catch (err) {
     next(err)
   }

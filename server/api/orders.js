@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const {Order, OrderItem, Product} = require('../db/models')
+const {userGate} = require('./security')
 module.exports = router
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', userGate, async (req, res, next) => {
   try {
     if (req.user) {
       res.send(
@@ -24,7 +25,7 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.post('/:userId', async (req, res, next) => {
+router.post('/:userId', userGate, async (req, res, next) => {
   try {
     const currCartOrder = await Order.findOne({
       where: {userId: req.params.userId, purchased: false}
@@ -40,7 +41,7 @@ router.post('/:userId', async (req, res, next) => {
   }
 })
 
-router.put('/:userId', async (req, res, next) => {
+router.put('/:userId', userGate, async (req, res, next) => {
   try {
     const itemToUpdate = await OrderItem.update(
       {quantity: req.body.quantity},
@@ -54,7 +55,7 @@ router.put('/:userId', async (req, res, next) => {
   }
 })
 
-router.delete('/:userId', async (req, res, next) => {
+router.delete('/:userId', userGate, async (req, res, next) => {
   try {
     await OrderItem.destroy({
       where: {productId: req.body.productId, orderId: req.body.orderId}
@@ -65,7 +66,7 @@ router.delete('/:userId', async (req, res, next) => {
   }
 })
 
-router.put('/:userId/order', async (req, res, next) => {
+router.put('/:userId/order', userGate, async (req, res, next) => {
   try {
     // const orderProducts = await Order.findAll({
     //   where: {
@@ -91,7 +92,7 @@ router.put('/:userId/order', async (req, res, next) => {
   }
 })
 
-router.post('/:userId/order', async (req, res, next) => {
+router.post('/:userId/order', userGate, async (req, res, next) => {
   try {
     const newCart = await Order.create({
       purchased: false,
