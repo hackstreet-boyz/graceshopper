@@ -36,7 +36,11 @@ const CartTable = props => {
             </td>
             <td>{`$${product.orderitems.quantity * product.price / 100}`}</td>
             <td>
-              <Button variant="danger" type="submit">
+              <Button
+                variant="danger"
+                type="submit"
+                onClick={() => props.remove(product.orderitems)}
+              >
                 Delete
               </Button>
             </td>

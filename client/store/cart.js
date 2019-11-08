@@ -4,6 +4,7 @@ import axios from 'axios'
 const GOT_ITEMS_FROM_CART = 'GOT_ITEMS_FROM_CART'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 const ADD_ITEMS_TO_CART = 'ADD_ITEMS_TO_CART'
+const REMOVE_ITEM = 'REMOVE_ITEM'
 
 /*INITIAL STATE*/
 const initialState = {items: [], item: {}}
@@ -24,6 +25,11 @@ const addItemToCart = item => ({
   item
 })
 
+const removeItemFromCart = item => ({
+  type: REMOVE_ITEM,
+  item
+})
+
 /*THUNKS*/
 export const addItemToCartThunk = (userId, newData) => {
   return async dispatch => {
@@ -35,10 +41,8 @@ export const addItemToCartThunk = (userId, newData) => {
 export const getItemsFromCart = user => {
   return async dispatch => {
     try {
-      console.log('getItemsFromCart is working...')
       const {data} = await axios.get(`/api/cart/${user.id}`)
       dispatch(gotItemsFromCart(data))
-      console.log('getItemsFromCart is completed')
     } catch (error) {
       console.error(error)
     }
@@ -48,11 +52,9 @@ export const getItemsFromCart = user => {
 export const submitOrderThunk = user => {
   return async dispatch => {
     try {
-      console.log('submitOrder is working...')
       await axios.put(`/api/cart/${user.id}/order`)
       const {data} = await axios.post(`/api/cart/${user.id}/order`)
       dispatch(gotItemsFromCart(data))
-      console.log('submitOrder is completed')
     } catch (error) {
       console.error(error)
     }
@@ -91,6 +93,23 @@ export const decreaseQuantity = (user, item) => {
   }
 }
 
+export const removeItem = (user, item) => {
+  return async dispatch => {
+    try {
+      const dataToDelete = {
+        productId: item.productId,
+        orderId: item.orderId
+      }
+      await axios.delete(`/api/cart/${user.id}`, {
+        data: dataToDelete
+      })
+      dispatch(removeItemFromCart(dataToDelete))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 /*REDUCERS*/
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -98,6 +117,14 @@ export default function(state = initialState, action) {
       return {...state, items: action.items}
     case UPDATE_QUANTITY:
       return {...state, item: action.item}
+    case REMOVE_ITEM: {
+      const newCart = state.items[0].products.filter(
+        item => item.id !== action.item.productId
+      )
+      let newOrder = [...state.items]
+      newOrder[0].products = newCart
+      return {...state, items: newOrder}
+    }
     default:
       return state
   }
