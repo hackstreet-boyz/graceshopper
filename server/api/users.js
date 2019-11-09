@@ -18,9 +18,9 @@ router.get('/', adminGate, async (req, res, next) => {
   }
 })
 
-router.get('/:id', userAdminGate, async (req, res, next) => {
+router.get('/:userId', userAdminGate, async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id, {
+    const user = await User.findByPk(req.params.userId, {
       attributes: ['id', 'email']
     })
     if (user) {
