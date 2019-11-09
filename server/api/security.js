@@ -9,7 +9,7 @@ const adminGate = (req, res, next) => {
 const userAdminGate = (req, res, next) => {
   if (
     (req.user && req.user.isAdmin) ||
-    (req.user && req.user.id === req.params.id)
+    (req.user && req.user.id === +req.params.userId)
   ) {
     next()
   } else {
@@ -18,7 +18,7 @@ const userAdminGate = (req, res, next) => {
 }
 
 const userGate = (req, res, next) => {
-  if (req.user && req.user.id === req.params.id) {
+  if (req.user && req.user.id === +req.params.userId) {
     next()
   } else {
     next('please sign in')

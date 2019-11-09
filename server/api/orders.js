@@ -3,9 +3,10 @@ const {Order, OrderItem, Product} = require('../db/models')
 const {userGate} = require('./security')
 module.exports = router
 
-router.get('/:userId', userGate, async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
     if (req.user) {
+      console.log(req.params)
       res.send(
         await Order.findAll({
           where: {purchased: false, userId: req.user.id},
