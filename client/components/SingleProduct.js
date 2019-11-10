@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getSingleProductThunk} from '../store/products'
-import {addItemToCartThunk} from '../store/cart'
+import {addItemToCartThunk, cartIdThunk} from '../store/cart'
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -11,14 +11,12 @@ class SingleProduct extends React.Component {
   }
   componentDidMount() {
     this.props.getSingleProduct(this.props.match.params.productId)
-    // this.props.gotOrderItems()
-    // const {data} =axios.get('/api/cart/test')
-    // console.log(data)
+    this.props.getCartId(this.props.userId)
   }
 
   handleSubmit() {
     const putInCart = {
-      // orderId: this.props.singleProduct.orders[0].id,
+      orderId: this.props.cartId[this.props.cartId.length - 1].id,
       productId: this.props.match.params.productId,
       quantity: 1
     }
@@ -83,7 +81,7 @@ const mapStateToProps = state => {
   return {
     userId: state.user.id,
     singleProduct: state.products.singleProduct,
-    state: state,
+    cartId: state.cart.cartId,
     isLoggedIn: !!state.user.id
   }
 }
@@ -91,8 +89,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: id => dispatch(getSingleProductThunk(id)),
-    addItemToCart: (id, item) => dispatch(addItemToCartThunk(id, item))
-    // gotOrderItems: () => dispatch(gotOrderItemsThunk())
+    addItemToCart: (id, item) => dispatch(addItemToCartThunk(id, item)),
+    getCartId: id => dispatch(cartIdThunk(id))
   }
 }
 

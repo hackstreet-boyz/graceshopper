@@ -26,7 +26,6 @@ class Cart extends React.Component {
   }
 
   redirectFunc() {
-    console.log('working')
     this.setState({
       redirect: true
     })
@@ -63,6 +62,7 @@ class Cart extends React.Component {
   }
 
   render() {
+    console.log(this.props.state)
     return this.props.cart && this.props.cart[0] ? (
       <div>
         {this.renderRedirect()}

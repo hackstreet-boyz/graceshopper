@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 
 const CartTable = props => {
+  const currCartProducts = props.cart[props.cart.length - 1].products
+  console.log(currCartProducts)
   return props.cart && props.cart[0] && props.cart[0].products ? (
     <Table striped bordered hover>
       <thead>
@@ -15,7 +17,7 @@ const CartTable = props => {
         </tr>
       </thead>
       <tbody>
-        {props.cart[0].products.map((product, index) => (
+        {currCartProducts.map((product, index) => (
           <tr key={product.id}>
             <td>{index + 1}</td>
             <td>{product.name}</td>
