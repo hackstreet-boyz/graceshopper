@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getSingleProductThunk, gotOrderItemsThunk} from '../store/products'
+import {getSingleProductThunk} from '../store/products'
 import {addItemToCartThunk} from '../store/cart'
-import axios from 'axios'
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -18,7 +17,6 @@ class SingleProduct extends React.Component {
   }
 
   handleSubmit() {
-    console.log(this.props.state)
     const putInCart = {
       // orderId: this.props.singleProduct.orders[0].id,
       productId: this.props.match.params.productId,

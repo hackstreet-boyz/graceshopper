@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
-import {Link} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import {
   getItemsFromCart,
   submitOrderThunk,
@@ -22,6 +22,20 @@ class Cart extends React.Component {
     this.increase = this.increase.bind(this)
     this.decrease = this.decrease.bind(this)
     this.remove = this.remove.bind(this)
+    this.redirectFunc = this.redirectFunc.bind(this)
+  }
+
+  redirectFunc() {
+    console.log('working')
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/cart/confirmation" />
+    }
   }
 
   componentDidMount() {
@@ -33,6 +47,7 @@ class Cart extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.submitOrder(this.props.user)
+    this.redirectFunc()
   }
 
   increase(item) {
@@ -50,6 +65,7 @@ class Cart extends React.Component {
   render() {
     return this.props.cart && this.props.cart[0] ? (
       <div>
+        {this.renderRedirect()}
         <CartTable
           cart={this.props.cart}
           item={this.props.item}
@@ -57,8 +73,9 @@ class Cart extends React.Component {
           decrease={this.decrease}
           remove={this.remove}
         />
-        <Link to="/cart/confirmation">LINK</Link>
-        <Button variant="primary" type="submit" onClick={this.handleSubmit} />
+        <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+          Checkout
+        </Button>
       </div>
     ) : null
   }
@@ -68,7 +85,8 @@ const mapStateToProps = state => {
   return {
     cart: state.cart.items,
     item: state.cart.item,
-    user: state.user
+    user: state.user,
+    state: state
   }
 }
 
