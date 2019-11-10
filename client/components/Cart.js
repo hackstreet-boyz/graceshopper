@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
+import {Link} from 'react-router-dom'
 import {
   getItemsFromCart,
   submitOrderThunk,
@@ -14,6 +15,9 @@ import CartTable from './CartTable'
 class Cart extends React.Component {
   constructor() {
     super()
+    this.state = {
+      redirect: false
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.increase = this.increase.bind(this)
     this.decrease = this.decrease.bind(this)
@@ -53,9 +57,8 @@ class Cart extends React.Component {
           decrease={this.decrease}
           remove={this.remove}
         />
-        <Button variant="primary" type="submit" onClick={this.handleSubmit}>
-          Checkout
-        </Button>
+        <Link to="/cart/confirmation">LINK</Link>
+        <Button variant="primary" type="submit" onClick={this.handleSubmit} />
       </div>
     ) : null
   }
