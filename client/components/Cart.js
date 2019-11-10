@@ -14,6 +14,11 @@ import CartTable from './CartTable'
 class Cart extends React.Component {
   constructor() {
     super()
+    this.state = {
+      guestCart: window.localStorage.guestCart
+        ? JSON.parse(window.localStorage.guestCart)
+        : null
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.increase = this.increase.bind(this)
     this.decrease = this.decrease.bind(this)
@@ -31,23 +36,86 @@ class Cart extends React.Component {
     this.props.submitOrder(this.props.user)
   }
 
-  increase(item) {
-    this.props.increaseQuantity(this.props.user, item)
+  increase(product) {
+    if (this.props.user.id) {
+      this.props.increaseQuantity(this.props.user, product.orderitems)
+    } else {
+      this.setState({
+        guestCart: {
+          ...this.state.guestCart,
+          [product.id]: {
+            ...this.state.guestCart[product.id],
+            orderitems: {
+              quantity: 1 + this.state.guestCart[product.id].orderitems.quantity
+            }
+          }
+        }
+      })
+      window.localStorage.setItem(
+        'guestCart',
+        JSON.stringify(this.state.guestCart)
+      )
+    }
   }
 
-  decrease(item) {
-    this.props.decreaseQuantity(this.props.user, item)
+  decrease(product) {
+    if (this.props.user.id) {
+      this.props.decreaseQuantity(this.props.user, product.orderitems)
+    } else {
+      this.setState({
+        guestCart: {
+          ...this.state.guestCart,
+          [product.id]: {
+            ...this.state.guestCart[product.id],
+            orderitems: {
+              quantity: this.state.guestCart[product.id].orderitems.quantity - 1
+            }
+          }
+        }
+      })
+      window.localStorage.setItem(
+        'guestCart',
+        JSON.stringify(this.state.guestCart)
+      )
+    }
   }
 
-  remove(item) {
-    this.props.removeItem(this.props.user, item)
+  remove(product) {
+    if (this.props.user.id) {
+      this.props.removeItem(this.props.user, product.orderitems)
+    } else {
+      let newState = this.state.guestCart
+      delete newState[product.id]
+      this.setState({
+        guestCart: newState
+      })
+      window.localStorage.setItem(
+        'guestCart',
+        JSON.stringify(this.state.guestCart)
+      )
+    }
   }
 
   render() {
-    return this.props.cart && this.props.cart[0] ? (
+    return this.props.user.id ? (
+      this.props.cart && this.props.cart[0] ? (
+        <div>
+          <CartTable
+            cart={this.props.cart}
+            item={this.props.item}
+            increase={this.increase}
+            decrease={this.decrease}
+            remove={this.remove}
+          />
+          <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+            Checkout
+          </Button>
+        </div>
+      ) : null
+    ) : this.state.guestCart ? (
       <div>
         <CartTable
-          cart={this.props.cart}
+          cart={Object.values(this.state.guestCart)}
           item={this.props.item}
           increase={this.increase}
           decrease={this.decrease}
