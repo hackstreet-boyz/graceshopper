@@ -9,23 +9,42 @@ class AllProducts extends React.Component {
   }
   render() {
     return (
-      <div>
+      <ul className="list-group">
         {this.props.allProducts.length > 0
           ? // this.props.allProducts.products.allProducts[0].name
             this.props.allProducts.map(product => (
-              <div key={product.id}>
-                <ul>
-                  <li>
-                    {product.name}
-                    <Link to={`/products/${product.id}`}>
-                      <img src={product.imageUrl} height="140" width="100" />
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+              <li className="list-group-item d-flex flex-row" key={product.id}>
+                <div className="p-3 w-25">
+                  {' '}
+                  <Link to={`/products/${product.id}`}>
+                    <img src={product.imageUrl} height="160" width="160" />
+                  </Link>
+                </div>
+                <div className="p-3 w-25 card border-0">
+                  <div className="card-body">
+                    <h4 className="card-title">
+                      <Link to={`/products/${product.id}`}>{product.name}</Link>
+                    </h4>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      {product.brand}
+                    </h6>
+                    <p className="card-text">{product.description}</p>
+                  </div>
+                </div>
+                <div className="p-5 w-25 h-100">
+                  <h5 className="text-center align-middle">
+                    ${(product.price / 100).toFixed(2)}
+                  </h5>
+                </div>
+                <div className="w-25 d-flex flex-column justify-content-center">
+                  <button className="flex-item w-40">
+                    add to cart (this is a placeholder for now)
+                  </button>
+                </div>
+              </li>
             ))
           : null}
-      </div>
+      </ul>
     )
   }
 }
