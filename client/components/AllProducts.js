@@ -1,12 +1,54 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getAllProductsThunk} from '../store/products'
+import {addItemToCartThunk} from '../store/cart'
 import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
+  constructor() {
+    super()
+    this.handleSubmit = this.handleSubmit.bind(this)
+    // this.guestCartAdd = this.guestCartAdd.bind(this)
+  }
+
   componentDidMount() {
     this.props.getAllProducts()
   }
+
+  handleSubmit(event) {
+    console.log('event is......', event.target)
+    console.log('props', this.props.userId)
+    const putInCart = {
+      // orderId: this.props.singleProduct.orders[0].id,
+      productId: event.target.id,
+      quantity: 1
+    }
+    this.props.addItemToCart(this.props.userId.id, putInCart)
+  }
+
+  // guestCartAdd() {
+  //   const guestCart = 'guestCart'
+  //   let currentGuestCart = JSON.parse(window.localStorage.getItem(guestCart))
+  //   if (currentGuestCart && currentGuestCart[this.props.singleProduct.id]) {
+  //     currentGuestCart[
+  //       this.props.singleProduct.id
+  //     ].orderitems.quantity = ++currentGuestCart[this.props.singleProduct.id]
+  //       .orderitems.quantity
+  //     window.localStorage.setItem(guestCart, JSON.stringify(currentGuestCart))
+  //   } else if (currentGuestCart) {
+  //     currentGuestCart[this.props.singleProduct.id] = this.props.singleProduct
+  //     currentGuestCart[this.props.singleProduct.id].orderitems = {quantity: 1}
+  //     window.localStorage.setItem(guestCart, JSON.stringify(currentGuestCart))
+  //   } else {
+  //     const initalCart = {
+  //       [this.props.singleProduct.id]: this.props.singleProduct
+  //     }
+  //     initalCart[this.props.singleProduct.id].orderitems = {quantity: 1}
+  //     window.localStorage.setItem(guestCart, JSON.stringify(initalCart))
+  //   }
+  //   console.log(JSON.parse(window.localStorage.guestCart))
+  // }
+
   render() {
     return (
       <ul className="list-group">
@@ -37,7 +79,11 @@ class AllProducts extends React.Component {
                   </h5>
                 </div>
                 <div className="w-25 d-flex flex-column justify-content-center">
-                  <button className="flex-item w-40">
+                  <button
+                    id={product.id}
+                    className="flex-item w-40"
+                    onClick={this.handleSubmit}
+                  >
                     add to cart (this is a placeholder for now)
                   </button>
                 </div>
@@ -51,13 +97,15 @@ class AllProducts extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    allProducts: state.products.allProducts
+    allProducts: state.products.allProducts,
+    userId: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllProducts: () => dispatch(getAllProductsThunk())
+    getAllProducts: () => dispatch(getAllProductsThunk()),
+    addItemToCart: (id, item) => dispatch(addItemToCartThunk(id, item))
   }
 }
 

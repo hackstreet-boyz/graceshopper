@@ -26,7 +26,7 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.post('/:userId', userGate, async (req, res, next) => {
+router.post('/:userId', async (req, res, next) => {
   try {
     const currCartOrder = await Order.findOne({
       where: {userId: req.params.userId, purchased: false}
