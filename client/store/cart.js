@@ -47,7 +47,9 @@ export const cartIdThunk = userId => {
 
 export const addItemToCartThunk = (userId, newData) => {
   return async dispatch => {
+    console.log('thunk is about to start thunking')
     const {data} = await axios.post(`/api/cart/${userId}`, newData)
+    console.log('data came back anddddd it is...', data)
     dispatch(addItemToCart(data))
   }
 }

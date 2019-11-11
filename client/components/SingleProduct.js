@@ -29,19 +29,21 @@ class SingleProduct extends React.Component {
     if (currentGuestCart && currentGuestCart[this.props.singleProduct.id]) {
       currentGuestCart[
         this.props.singleProduct.id
-      ].quantity = ++currentGuestCart[this.props.singleProduct.id].quantity
+      ].orderitems.quantity = ++currentGuestCart[this.props.singleProduct.id]
+        .orderitems.quantity
       window.localStorage.setItem(guestCart, JSON.stringify(currentGuestCart))
     } else if (currentGuestCart) {
       currentGuestCart[this.props.singleProduct.id] = this.props.singleProduct
-      currentGuestCart[this.props.singleProduct.id].quantity = 1
+      currentGuestCart[this.props.singleProduct.id].orderitems = {quantity: 1}
       window.localStorage.setItem(guestCart, JSON.stringify(currentGuestCart))
     } else {
       const initalCart = {
         [this.props.singleProduct.id]: this.props.singleProduct
       }
-      initalCart[this.props.singleProduct.id].quantity = 1
+      initalCart[this.props.singleProduct.id].orderitems = {quantity: 1}
       window.localStorage.setItem(guestCart, JSON.stringify(initalCart))
     }
+    console.log(JSON.parse(window.localStorage.guestCart))
   }
 
   render() {
