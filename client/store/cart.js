@@ -82,13 +82,17 @@ export const increaseQuantity = (user, item) => {
 export const decreaseQuantity = (user, item) => {
   return async dispatch => {
     try {
-      const dataToSend = {
-        quantity: (item.quantity -= 1),
-        productId: item.productId,
-        orderId: item.orderId
+      if (item.quantity > 0) {
+        const dataToSend = {
+          quantity: (item.quantity -= 1),
+          productId: item.productId,
+          orderId: item.orderId
+        }
+        const {data} = await axios.put(`/api/cart/${user.id}`, dataToSend)
+        dispatch(updateQuantity(data))
+      } else {
+        throw new Error('Cannot decrease quantity')
       }
-      const {data} = await axios.put(`/api/cart/${user.id}`, dataToSend)
-      dispatch(updateQuantity(data))
     } catch (error) {
       console.error(error)
     }
