@@ -17,7 +17,7 @@ class Cart extends React.Component {
     this.state = {
       guestCart: window.localStorage.guestCart
         ? JSON.parse(window.localStorage.guestCart)
-        : null
+        : {}
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.increase = this.increase.bind(this)
@@ -112,7 +112,7 @@ class Cart extends React.Component {
           </Button>
         </div>
       ) : null
-    ) : this.state.guestCart ? (
+    ) : (
       <div>
         <CartTable
           cart={Object.values(this.state.guestCart)}
@@ -125,7 +125,7 @@ class Cart extends React.Component {
           Checkout
         </Button>
       </div>
-    ) : null
+    )
   }
 }
 
