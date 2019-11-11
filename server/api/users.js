@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
-const {adminGate, userAdminGate} = require('./security')
+const {User, Order, Product} = require('../db/models')
+const {adminGate, userAdminGate, userGate} = require('./security')
 
 module.exports = router
 
@@ -26,9 +26,52 @@ router.get('/:userId', userAdminGate, async (req, res, next) => {
     if (user) {
       res.send(user)
     } else {
-      res.status(404).send('This user doesnt exist')
+      res.status(404).send("This user doesn't exist")
     }
   } catch (err) {
     next(err)
+  }
+})
+
+router.get('/:userId/:orderId', userGate, async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId, {
+      attributes: ['id', 'email'],
+      include: [
+        {
+          model: Order,
+          where: {id: req.params.orderId},
+          include: {model: Product}
+        }
+      ]
+    })
+    if (user) {
+      res.send(user)
+    } else {
+      res.status(404).send("This order doesn't exist")
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:userId/:orderId/:productId', userGate, async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId, {
+      attributes: ['id', 'email'],
+      include: [
+        {
+          model: Order,
+          include: {model: Product, where: {id: req.params.productId}}
+        }
+      ]
+    })
+    if (user) {
+      res.send(user)
+    } else {
+      res.status(404).send("This cartitem doesn't exist")
+    }
+  } catch (error) {
+    next(error)
   }
 })

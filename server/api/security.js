@@ -2,7 +2,9 @@ const adminGate = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next()
   } else {
-    next('not admin')
+    const error = new Error('401 Inaccessible')
+    error.status = 401
+    next(error)
   }
 }
 
@@ -13,7 +15,9 @@ const userAdminGate = (req, res, next) => {
   ) {
     next()
   } else {
-    next('forbidden')
+    const error = new Error('401 Inaccessible')
+    error.status = 401
+    next(error)
   }
 }
 
@@ -21,7 +25,9 @@ const userGate = (req, res, next) => {
   if (req.user && req.user.id === +req.params.userId) {
     next()
   } else {
-    next('please sign in')
+    const error = new Error('401 Inaccessible')
+    error.status = 401
+    next(error)
   }
 }
 
