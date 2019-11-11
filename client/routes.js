@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
+import {Elements, StripeProvider} from 'react-stripe-elements'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import AllProducts from './components/AllProducts'
@@ -8,6 +9,7 @@ import Cart from './components/Cart'
 import {me} from './store'
 import SingleProduct from './components/SingleProduct'
 import ConfirmationPage from './components/Confirmation'
+import Checkout from './components/Checkout'
 
 /**
  * COMPONENT
@@ -27,7 +29,8 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/products" component={AllProducts} />
         <Route exact path="/products/:productId" component={SingleProduct} />
-        <Route exact path="/cart/confirmation" component={ConfirmationPage} />
+        {/* <Route exact path="/cart/confirmation" component={ConfirmationPage} /> */}
+        <Route exact path="/cart/confirmation" component={Checkout} />
         <Route exact path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
