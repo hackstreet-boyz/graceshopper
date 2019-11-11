@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
+const {User, Order, Product} = require('../db/models')
+const {userGate} = require('../api/security')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -38,8 +39,66 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
+router.get('/me', async (req, res) => {
   res.json(req.user)
+})
+
+router.get('/me/orders', async (req, res, next) => {
+  try {
+    const orders = await User.findByPk(req.user.id, {
+      include: [{model: Order}]
+    })
+    res.send(orders)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/me/orders/:orderId', async (req, res, next) => {
+  try {
+    const orderDetails = await User.findByPk(req.user.id, {
+      include: [
+        {
+          model: Order,
+          where: {id: req.params.orderId},
+          include: {model: Product}
+        }
+      ]
+    })
+    if (orderDetails) {
+      res.send(orderDetails)
+    } else {
+      res.status(404).send("This order doesn't exist")
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/me/orders/:orderId/cart/:itemId', async (req, res, next) => {
+  try {
+    const cartItems = await User.findByPk(req.user.id, {
+      include: [
+        {
+          model: Order,
+          where: {id: req.params.orderId},
+          include: {
+            model: Product,
+            where: {
+              id: req.params.itemId
+            }
+          }
+        }
+      ]
+    })
+    if (cartItems) {
+      res.send(cartItems)
+    } else {
+      res.status(404).send("This cart item doesn't exist")
+    }
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.use('/google', require('./google'))
