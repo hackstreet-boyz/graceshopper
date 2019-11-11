@@ -41,5 +41,6 @@ const Product = db.define('products', {
 
 Product.beforeValidate(function(user) {
   user.price = user.price * 100
+  // fix  this
 })
 module.exports = Product
