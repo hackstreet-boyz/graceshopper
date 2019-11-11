@@ -131,6 +131,7 @@ class Cart extends React.Component {
       ) : null
     ) : this.state.guestCart ? (
       <div>
+        {this.renderRedirect()}
         <CartTable
           cart={Object.values(this.state.guestCart)}
           item={this.props.item}
@@ -150,8 +151,7 @@ const mapStateToProps = state => {
   return {
     cart: state.cart.items,
     item: state.cart.item,
-    user: state.user,
-    state: state
+    user: state.user
   }
 }
 
