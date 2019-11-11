@@ -3,7 +3,12 @@ import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 
 const CartTable = props => {
-  return props.cart && props.cart[0] && props.cart[0].products ? (
+  // let userOrGuestCart = props.cart && props.cart[0] && props.cart[0].products ? props.cart[0].products :
+  let currCart =
+    props.cart && props.cart[0] && props.cart[0].products
+      ? props.cart[0].products
+      : props.cart
+  return currCart ? (
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -15,31 +20,29 @@ const CartTable = props => {
         </tr>
       </thead>
       <tbody>
-        {props.cart[0].products.map((product, index) => (
+        {currCart.map((product, index) => (
           <tr key={product.id}>
             <td>{index + 1}</td>
             <td>{product.name}</td>
             <td>
-              <button
-                type="submit"
-                onClick={() => props.decrease(product.orderitems)}
-              >
+              <button type="submit" onClick={() => props.decrease(product)}>
                 -
               </button>
               {` ${product.orderitems.quantity} `}
-              <button
-                type="submit"
-                onClick={() => props.increase(product.orderitems)}
-              >
+              <button type="submit" onClick={() => props.increase(product)}>
                 +
               </button>
             </td>
-            <td>{`$${product.orderitems.quantity * product.price / 100}`}</td>
+            <td>{`$${(
+              product.orderitems.quantity *
+              product.price /
+              100
+            ).toFixed(2)}`}</td>
             <td>
               <Button
                 variant="danger"
                 type="submit"
-                onClick={() => props.remove(product.orderitems)}
+                onClick={() => props.remove(product)}
               >
                 Delete
               </Button>
