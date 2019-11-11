@@ -3,11 +3,13 @@ import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 
 const CartTable = props => {
-  // let userOrGuestCart = props.cart && props.cart[0] && props.cart[0].products ? props.cart[0].products :
   let currCart =
     props.cart && props.cart[0] && props.cart[0].products
-      ? props.cart[0].products
+      ? props.cart[props.cart.length - 1].products //props.cart[0].products
       : props.cart
+  // const currCartProducts = props.cart[props.cart.length - 1].products
+  // let userOrGuestCart = props.cart && props.cart[0] && props.cart[0].products ? props.cart[0].products :
+  console.log('CURRCART!!!', currCart)
   return currCart ? (
     <Table striped bordered hover>
       <thead>

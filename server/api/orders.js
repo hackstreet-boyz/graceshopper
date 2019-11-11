@@ -6,7 +6,6 @@ module.exports = router
 router.get('/:userId', async (req, res, next) => {
   try {
     if (req.user) {
-      console.log(req.params)
       res.send(
         await Order.findAll({
           where: {purchased: false, userId: req.user.id},
@@ -28,11 +27,11 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/:userId', userGate, async (req, res, next) => {
   try {
-    const currCartOrder = await Order.findOne({
-      where: {userId: req.params.userId, purchased: false}
-    })
+    // const currCartOrder = await Order.findOne({
+    //   where: {userId: req.params.userId, purchased: false}
+    // })
     const itemToGet = await OrderItem.findOrCreate({
-      where: {productId: req.body.productId, orderId: currCartOrder.id}
+      where: {productId: req.body.productId, orderId: req.body.orderId}
     })
     const item = itemToGet[0]
     await item.addItem(req.body.quantity)
