@@ -8,7 +8,9 @@ const CartTable = props => {
     props.cart && props.cart[0] && props.cart[0].products
       ? props.cart[0].products
       : props.cart
-  return currCart ? (
+  console.log('props:', props)
+  console.log('currCart:', currCart)
+  return currCart.length ? (
     <Table striped bordered hover>
       <thead>
         <tr>
