@@ -69,24 +69,10 @@ router.delete('/:userId', userGate, async (req, res, next) => {
 
 router.put('/:userId/order', userGate, async (req, res, next) => {
   try {
-    // const orderProducts = await Order.findAll({
-    //   where: {
-    //     userId: req.params.userId,
-    //     purchased: false
-    //   },
-    //   include: [{model: Product}]
-    // // })
-    // const currOrder = await Order.findOne({where: {userId: req.params.userId, purchased: false}})
-    // const orderItems = await OrderItem.findAll({where: {orderId: currOrder.id}})
-    const purchasedUpdate = await Order.update(
-      {purchased: true},
-      {
-        where: {
-          id: req.params.userId,
-          purchased: false
-        }
-      }
-    )
+    const currCartOrder = await Order.findOne({
+      where: {purchased: false, userId: req.params.userId}
+    })
+    const purchasedUpdate = await currCartOrder.update({purchased: true})
     res.send(purchasedUpdate)
   } catch (error) {
     next(error)
