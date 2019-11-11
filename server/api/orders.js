@@ -6,7 +6,7 @@ module.exports = router
 router.get('/:userId', async (req, res, next) => {
   try {
     if (req.user) {
-      console.log(req.params)
+      console.log(req.user.isAdmin)
       res.send(
         await Order.findAll({
           where: {purchased: false, userId: req.user.id},

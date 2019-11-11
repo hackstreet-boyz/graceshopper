@@ -15,7 +15,11 @@ describe('User model', () => {
 
       beforeEach(async () => {
         cody = await User.create({
+          firstName: 'Cody',
+          lastName: 'Johnson',
+          address: '123 main st',
           email: 'cody@puppybook.com',
+          phone: '123-45-67',
           password: 'bones'
         })
       })
