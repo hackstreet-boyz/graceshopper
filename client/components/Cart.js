@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
+import {Redirect} from 'react-router-dom'
 import {
   getItemsFromCart,
   submitOrderThunk,
@@ -15,14 +16,28 @@ class Cart extends React.Component {
   constructor() {
     super()
     this.state = {
+      redirect: false,
       guestCart: window.localStorage.guestCart
         ? JSON.parse(window.localStorage.guestCart)
-        : null
+        : {}
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.increase = this.increase.bind(this)
     this.decrease = this.decrease.bind(this)
     this.remove = this.remove.bind(this)
+    this.redirectFunc = this.redirectFunc.bind(this)
+  }
+
+  redirectFunc() {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/cart/confirmation" />
+    }
   }
 
   componentDidMount() {
@@ -35,6 +50,7 @@ class Cart extends React.Component {
     event.preventDefault()
     console.log('props:', this.props.cart)
     this.props.submitOrder(this.props.user)
+    this.redirectFunc()
   }
 
   increase(product) {
@@ -101,6 +117,7 @@ class Cart extends React.Component {
     return this.props.user.id ? (
       this.props.cart && this.props.cart[0] ? (
         <div>
+          {this.renderRedirect()}
           <CartTable
             cart={this.props.cart}
             item={this.props.item}
@@ -113,8 +130,9 @@ class Cart extends React.Component {
           </Button>
         </div>
       ) : null
-    ) : this.state.guestCart ? (
+    ) : (
       <div>
+        {this.renderRedirect()}
         <CartTable
           cart={Object.values(this.state.guestCart)}
           item={this.props.item}
@@ -126,7 +144,7 @@ class Cart extends React.Component {
           Checkout
         </Button>
       </div>
-    ) : null
+    )
   }
 }
 

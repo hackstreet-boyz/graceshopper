@@ -22,35 +22,37 @@ const CartTable = props => {
         </tr>
       </thead>
       <tbody>
-        {currCart.map((product, index) => (
-          <tr key={product.id}>
-            <td>{index + 1}</td>
-            <td>{product.name}</td>
-            <td>
-              <button type="submit" onClick={() => props.decrease(product)}>
-                -
-              </button>
-              {` ${product.orderitems.quantity} `}
-              <button type="submit" onClick={() => props.increase(product)}>
-                +
-              </button>
-            </td>
-            <td>{`$${(
-              product.orderitems.quantity *
-              product.price /
-              100
-            ).toFixed(2)}`}</td>
-            <td>
-              <Button
-                variant="danger"
-                type="submit"
-                onClick={() => props.remove(product)}
-              >
-                Delete
-              </Button>
-            </td>
-          </tr>
-        ))}
+        {currCart[0]
+          ? currCart.map((product, index) => (
+              <tr key={product.id}>
+                <td>{index + 1}</td>
+                <td>{product.name}</td>
+                <td>
+                  <button type="submit" onClick={() => props.decrease(product)}>
+                    -
+                  </button>
+                  {` ${product.orderitems.quantity} `}
+                  <button type="submit" onClick={() => props.increase(product)}>
+                    +
+                  </button>
+                </td>
+                <td>{`$${(
+                  product.orderitems.quantity *
+                  product.price /
+                  100
+                ).toFixed(2)}`}</td>
+                <td>
+                  <Button
+                    variant="danger"
+                    type="submit"
+                    onClick={() => props.remove(product)}
+                  >
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))
+          : null}
       </tbody>
     </Table>
   ) : null
