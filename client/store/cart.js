@@ -5,10 +5,9 @@ const GOT_ITEMS_FROM_CART = 'GOT_ITEMS_FROM_CART'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 const ADD_ITEMS_TO_CART = 'ADD_ITEMS_TO_CART'
 const REMOVE_ITEM = 'REMOVE_ITEM'
-const CART_ID = 'CART_ID'
 
 /*INITIAL STATE*/
-const initialState = {items: [], item: {}, cartId: {}}
+const initialState = {items: [], item: {}}
 
 /*ACTION CREATORS*/
 const gotItemsFromCart = items => ({
@@ -31,20 +30,7 @@ const removeItemFromCart = item => ({
   item
 })
 
-const cartId = id => ({
-  type: CART_ID,
-  id
-})
-
 /*THUNKS*/
-
-export const cartIdThunk = userId => {
-  return async dispatch => {
-    const {data} = await axios.get(`/api/cart/${userId}`)
-    dispatch(cartId(data))
-  }
-}
-
 export const addItemToCartThunk = (userId, newData) => {
   return async dispatch => {
     console.log('thunk is about to start thunking')
@@ -69,8 +55,8 @@ export const submitOrderThunk = user => {
   return async dispatch => {
     try {
       await axios.put(`/api/cart/${user.id}/order`)
-      const newCart = await axios.post(`/api/cart/${user.id}/order`)
-      dispatch(gotItemsFromCart(newCart.data))
+      const {data} = await axios.post(`/api/cart/${user.id}/order`)
+      dispatch(gotItemsFromCart(data))
     } catch (error) {
       console.error(error)
     }
@@ -140,9 +126,6 @@ export default function(state = initialState, action) {
       let newOrder = [...state.items]
       newOrder[0].products = newCart
       return {...state, items: newOrder}
-    }
-    case CART_ID: {
-      return {cartId: action.id}
     }
     default:
       return state

@@ -6,6 +6,7 @@ module.exports = router
 router.get('/:userId', async (req, res, next) => {
   try {
     if (req.user) {
+      console.log(req.params)
       res.send(
         await Order.findAll({
           where: {purchased: false, userId: req.user.id},
@@ -27,11 +28,11 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/:userId', userGate, async (req, res, next) => {
   try {
-    // const currCartOrder = await Order.findOne({
-    //   where: {userId: req.params.userId, purchased: false}
-    // })
+    const currCartOrder = await Order.findOne({
+      where: {userId: req.params.userId, purchased: false}
+    })
     const itemToGet = await OrderItem.findOrCreate({
-      where: {productId: req.body.productId, orderId: req.body.orderId}
+      where: {productId: req.body.productId, orderId: currCartOrder.id}
     })
     const item = itemToGet[0]
     await item.addItem(req.body.quantity)
@@ -77,15 +78,7 @@ router.put('/:userId/order', userGate, async (req, res, next) => {
     // // })
     // const currOrder = await Order.findOne({where: {userId: req.params.userId, purchased: false}})
     // const orderItems = await OrderItem.findAll({where: {orderId: currOrder.id}})
-    const purchasedUpdate = await Order.update(
-      {purchased: true},
-      {
-        where: {
-          id: req.params.userId,
-          purchased: false
-        }
-      }
-    )
+    const purchasedUpdate = await Order.update({purchased: true})
     res.send(purchasedUpdate)
   } catch (error) {
     next(error)
