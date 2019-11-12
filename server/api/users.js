@@ -75,3 +75,21 @@ router.get('/:userId/:orderId/:productId', userGate, async (req, res, next) => {
     next(error)
   }
 })
+
+router.put('/:userId', userAdminGate, async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId)
+
+    const updatedUser = await user.update({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      address: req.body.address,
+      phone: req.body.phone
+    })
+    console.log('iupdated user!!!!', updatedUser)
+    res.send(updatedUser)
+  } catch (error) {
+    next(error)
+  }
+})
