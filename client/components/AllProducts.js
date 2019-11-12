@@ -62,7 +62,7 @@ class AllProducts extends React.Component {
                 <div className="p-3 w-25">
                   {' '}
                   <Link to={`/products/${product.id}`}>
-                    <img src={product.imageUrl} height="160" width="160" />
+                    <img src={product.imageUrl} height="180" width="160" />
                   </Link>
                 </div>
                 <div className="p-3 w-25 card border-0">
