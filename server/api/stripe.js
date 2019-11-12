@@ -1,19 +1,33 @@
 const router = require('express').Router()
 const stripe = require('stripe')('sk_test_M8ivPTWrHOd6nPUnOcGSnBrD002uOrX464')
 module.exports = router
+const uuid = require('uuid/v4')
 
 router.post('/', async (req, res, next) => {
+  console.log('>>>>>>>>>>>> req.body >>>>>>>>>>>>', req.body)
+  let status
+  let err
   try {
-    console.log('>>>>>>>>>>>> req.body >>>>>>>>>>>>', req.body)
-    let {status} = await stripe.charges.create({
-      amount: 2000,
-      currency: 'usd',
-      description: 'An example charge',
-      source: req.body
+    const {token, product} = req.body
+    const customer = await stripe.customers.create({
+      source: token.id
     })
+    const idempotencyKey = uuid() //makes sure user isn't charged twice
 
-    res.json({status})
+    const charge = await stripe.charges.create(
+      {
+        amount: product.price,
+        currency: 'usd',
+        customer: customer.id,
+        description: 'An example charge'
+      },
+      {idempotencyKey}
+    )
+    console.log('Successful charge:', {charge})
+    status = 'success'
   } catch (err) {
-    next(err)
+    console.error('Unsuccessful charge:', err)
+    status = 'failure'
   }
+  res.json({err, status})
 })
