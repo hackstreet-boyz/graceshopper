@@ -44,6 +44,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
+    id: state.user,
     isLoggedIn: !!state.user.id
   }
 }
