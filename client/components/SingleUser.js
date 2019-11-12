@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Form, Col, Button} from 'react-bootstrap'
 
 import {gotSingleUser} from '../store/user'
 
@@ -15,6 +16,7 @@ class SingleUser extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    console.log(event.target.firstName.value)
     const newInfo = {
       firstName: event.target.firstName.value,
       lastName: event.target.lastName.value,
@@ -45,49 +47,63 @@ class SingleUser extends React.Component {
     } = this.props.user
     return (
       <div>
-        <h1>Account</h1>
-        <h2>
-          {firstName} {lastName}
-        </h2>
-        <p>{email}</p>
-        <p>{address}</p>
-        <p>{phone}</p>
-        <p>{creditcard}</p>
-        <p>
-          <img src={photo} height="150" width="150" />
-        </p>
         {this.state.form ? (
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              First Name:<input
-                type="text"
-                defaultValue={firstName}
-                name="firstName"
-              />
-            </label>
-            <label>
-              Last Name:<input
-                type="text"
-                defaultValue={lastName}
-                name="lastName"
-              />
-            </label>
-            <label>
-              email:<input type="text" defaultValue={email} name="email" />
-            </label>
-            <label>
-              address:<input
-                type="text"
-                defaultValue={address}
-                name="address"
-              />
-            </label>
-            <label>
-              phone:<input type="text" defaultValue={phone} name="phone" />
-            </label>
-            <input type="submit" />
-          </form>
-        ) : null}
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridfirstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder={firstName}
+                  name="firstName"
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridlastName">
+                <Form.Label>lastName</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder={lastName}
+                  name="lastName"
+                />
+              </Form.Group>
+            </Form.Row>
+
+            <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="text" placeholder={email} name="email" />
+            </Form.Group>
+
+            <Form.Group controlId="formGridAddress">
+              <Form.Label>Address</Form.Label>
+              <Form.Control type="text" placeholder={address} name="address" />
+            </Form.Group>
+
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridPhone">
+                <Form.Label>Phone</Form.Label>
+                <Form.Control type="text" placeholder={phone} name="phone" />
+              </Form.Group>
+            </Form.Row>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        ) : (
+          <div>
+            <h1>Account</h1>
+            <h2>
+              {firstName} {lastName}
+            </h2>
+            <p>Email: {email}</p>
+            <p>Address: {address}</p>
+            <p>Phone: {phone}</p>
+            <p>
+              <img src={photo} height="150" width="150" />
+            </p>
+          </div>
+        )}
         <button onClick={this.changeForm}>Edit Info</button>
       </div>
     )
