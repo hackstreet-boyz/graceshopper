@@ -51,7 +51,7 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    console.log('props.user.id is', this.props.userId)
+    console.log('props.user.id is', this.props.state)
     const {
       name,
       id,

@@ -15,41 +15,44 @@ class AllProducts extends React.Component {
     this.props.getAllProducts()
   }
 
-  handleSubmit(event) {
-    console.log('event is......', event.target)
-    console.log('props', this.props.userId)
+  handleSubmit(event, product) {
+    // console.log('props', this.props)
+    event.preventDefault()
     const putInCart = {
       // orderId: this.props.singleProduct.orders[0].id,
-      productId: event.target.id,
+      productId: product.id,
       quantity: 1
     }
     this.props.addItemToCart(this.props.userId.id, putInCart)
   }
 
-  // guestCartAdd() {
-  //   const guestCart = 'guestCart'
-  //   let currentGuestCart = JSON.parse(window.localStorage.getItem(guestCart))
-  //   if (currentGuestCart && currentGuestCart[this.props.singleProduct.id]) {
-  //     currentGuestCart[
-  //       this.props.singleProduct.id
-  //     ].orderitems.quantity = ++currentGuestCart[this.props.singleProduct.id]
-  //       .orderitems.quantity
-  //     window.localStorage.setItem(guestCart, JSON.stringify(currentGuestCart))
-  //   } else if (currentGuestCart) {
-  //     currentGuestCart[this.props.singleProduct.id] = this.props.singleProduct
-  //     currentGuestCart[this.props.singleProduct.id].orderitems = {quantity: 1}
-  //     window.localStorage.setItem(guestCart, JSON.stringify(currentGuestCart))
-  //   } else {
-  //     const initalCart = {
-  //       [this.props.singleProduct.id]: this.props.singleProduct
-  //     }
-  //     initalCart[this.props.singleProduct.id].orderitems = {quantity: 1}
-  //     window.localStorage.setItem(guestCart, JSON.stringify(initalCart))
-  //   }
-  //   console.log(JSON.parse(window.localStorage.guestCart))
-  // }
+  guestCartAdd(e, product) {
+    e.preventDefault()
+    console.log('THIS IS OUR EVENT', currentGuestCart)
+    const guestCart = 'guestCart'
+    let currentGuestCart = JSON.parse(window.localStorage.getItem(guestCart))
+    console.log('OUR CARTs', currentGuestCart)
+    if (currentGuestCart && currentGuestCart[product.id]) {
+      currentGuestCart[product.id].orderitems.quantity = ++currentGuestCart[
+        product.id
+      ].orderitems.quantity
+      window.localStorage.setItem(guestCart, JSON.stringify(currentGuestCart))
+    } else if (currentGuestCart) {
+      currentGuestCart[product.id] = product
+      currentGuestCart[product.id].orderitems = {quantity: 1}
+      window.localStorage.setItem(guestCart, JSON.stringify(currentGuestCart))
+    } else {
+      const initalCart = {
+        [product.id]: product
+      }
+      initalCart[product.id].orderitems = {quantity: 1}
+      window.localStorage.setItem(guestCart, JSON.stringify(initalCart))
+    }
+    console.log(JSON.parse(window.localStorage.guestCart))
+  }
 
   render() {
+    console.log('props', this.props)
     return (
       <ul className="list-group">
         {this.props.allProducts.length > 0
@@ -82,9 +85,13 @@ class AllProducts extends React.Component {
                   <button
                     id={product.id}
                     className="flex-item w-40"
-                    onClick={this.handleSubmit}
+                    onClick={
+                      this.props.isLoggedIn
+                        ? e => this.handleSubmit(e, product)
+                        : e => this.guestCartAdd(e, product)
+                    }
                   >
-                    add to cart (this is a placeholder for now)
+                    Add to cart
                   </button>
                 </div>
               </li>
@@ -98,7 +105,8 @@ class AllProducts extends React.Component {
 const mapStateToProps = state => {
   return {
     allProducts: state.products.allProducts,
-    userId: state.user
+    userId: state.user,
+    isLoggedIn: !!state.user.id
   }
 }
 
