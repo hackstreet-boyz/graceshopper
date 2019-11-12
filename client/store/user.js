@@ -42,14 +42,22 @@ export const gotSingleUser = (newInfo, id) => async dispatch => {
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (newUser, method) => async dispatch => {
+  let {email, password, firstName, lastName, address, phone} = newUser
+  console.log(email, password, firstName, lastName, address, phone)
   let res
   try {
-    res = await axios.post(`/auth/${method}`, {email, password})
+    res = await axios.post(`/auth/${method}`, {
+      email,
+      password,
+      firstName,
+      lastName,
+      address,
+      phone
+    })
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
-
   try {
     dispatch(getUser(res.data))
     history.push('/home')
