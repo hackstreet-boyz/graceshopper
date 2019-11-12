@@ -28,10 +28,7 @@ OrderItem.updateItemPrices = async function(currCartOrder) {
   cartItems.forEach(async (item, idx) => {
     const product = await Product.findOne({where: {id: item.productId}})
     await item.update({historicPrice: product.price})
-    totalPrice += +product.dataValues.price * +item.dataValues.quantity
   })
-  console.log('ANNDDDDD here it is>>>', totalPrice)
-  return totalPrice
 }
 
 module.exports = OrderItem

@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 import {Redirect} from 'react-router-dom'
 import {
@@ -79,21 +78,28 @@ class Cart extends React.Component {
     if (this.props.user.id) {
       this.props.decreaseQuantity(this.props.user, product.orderitems)
     } else {
-      this.setState({
-        guestCart: {
-          ...this.state.guestCart,
-          [product.id]: {
-            ...this.state.guestCart[product.id],
-            orderitems: {
-              quantity: this.state.guestCart[product.id].orderitems.quantity - 1
+      console.log('guestCart:', this.state.guestCart)
+      const newQuantity =
+        this.state.guestCart[product.id].orderitems.quantity - 1
+      if (newQuantity < 0) {
+        alert("Can't decrease any further!")
+      } else {
+        this.setState({
+          guestCart: {
+            ...this.state.guestCart,
+            [product.id]: {
+              ...this.state.guestCart[product.id],
+              orderitems: {
+                quantity: newQuantity
+              }
             }
           }
-        }
-      })
-      window.localStorage.setItem(
-        'guestCart',
-        JSON.stringify(this.state.guestCart)
-      )
+        })
+        window.localStorage.setItem(
+          'guestCart',
+          JSON.stringify(this.state.guestCart)
+        )
+      }
     }
   }
 

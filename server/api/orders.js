@@ -73,11 +73,8 @@ router.put('/:userId/order', userGate, async (req, res, next) => {
       where: {purchased: false, userId: req.params.userId},
       include: [{model: Product}]
     })
-    let totalPrice = await OrderItem.updateItemPrices(currCartOrder)
-    const purchasedUpdate = await currCartOrder.update({
-      purchased: true,
-      totalPrice: totalPrice
-    })
+    await OrderItem.updateItemPrices(currCartOrder)
+    const purchasedUpdate = await currCartOrder.update({purchased: true})
     res.send(purchasedUpdate)
   } catch (error) {
     next(error)
