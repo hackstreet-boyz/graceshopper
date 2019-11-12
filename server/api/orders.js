@@ -70,8 +70,10 @@ router.delete('/:userId', userGate, async (req, res, next) => {
 router.put('/:userId/order', userGate, async (req, res, next) => {
   try {
     const currCartOrder = await Order.findOne({
-      where: {purchased: false, userId: req.params.userId}
+      where: {purchased: false, userId: req.params.userId},
+      include: [{model: Product}]
     })
+    await OrderItem.updateItemPrices(currCartOrder)
     const purchasedUpdate = await currCartOrder.update({purchased: true})
     res.send(purchasedUpdate)
   } catch (error) {
