@@ -11,12 +11,13 @@ const gotAllOrders = orders => {
 
 export const getAllOrdersThunk = userId => {
   return async dispatch => {
-    const {data} = axios.get(`/orders/${userId}`)
+    console.log('in the thunk')
+    const {data} = await axios.get(`/api/orders/${userId}`)
     dispatch(gotAllOrders(data))
   }
 }
 
-const orders = (state = [], action) => {
+export const orders = (state = [], action) => {
   switch (action.type) {
     case GOT_ALL_ORDERS:
       return action.orders
@@ -24,5 +25,3 @@ const orders = (state = [], action) => {
       return state
   }
 }
-
-export default orders

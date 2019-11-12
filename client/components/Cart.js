@@ -45,10 +45,10 @@ class Cart extends React.Component {
     }
   }
 
-  handleSubmit(event) {
+  handleSubmit(event, totalPrice) {
     event.preventDefault()
     console.log('props:', this.props.cart)
-    this.props.submitOrder(this.props.user)
+    this.props.submitOrder(this.props.user, totalPrice)
     this.redirectFunc()
   }
 
@@ -125,15 +125,13 @@ class Cart extends React.Component {
         <div>
           {this.renderRedirect()}
           <CartTable
+            handleSubmit={this.handleSubmit}
             cart={this.props.cart}
             item={this.props.item}
             increase={this.increase}
             decrease={this.decrease}
             remove={this.remove}
           />
-          <Button variant="primary" type="submit" onClick={this.handleSubmit}>
-            Checkout
-          </Button>
         </div>
       ) : null
     ) : (
@@ -165,7 +163,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getItemsFromCart: user => dispatch(getItemsFromCart(user)),
-    submitOrder: user => dispatch(submitOrderThunk(user)),
+    submitOrder: (user, totalPrice) =>
+      dispatch(submitOrderThunk(user, totalPrice)),
     increaseQuantity: (user, item) => dispatch(increaseQuantity(user, item)),
     decreaseQuantity: (user, item) => dispatch(decreaseQuantity(user, item)),
     removeItem: (user, item) => dispatch(removeItem(user, item))

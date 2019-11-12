@@ -1,22 +1,56 @@
 import React from 'react'
 import {getAllOrdersThunk} from '../store/orders'
+import {connect} from 'react-redux'
 
-export default class OrderHistory extends React.Component {
+class OrderHistory extends React.Component {
   componentDidMount() {
-    getAllOrders(this.props.userId)
+    this.props.getAllOrders(this.props.userId)
   }
   render() {
-    return (
-      <ul>
-        {this.props.orders.map(order => {
-          let date = new Date(order.date)
-          return (
-            <li>
-              <h4> Order date: {date}</h4>
-            </li>
-          )
-        })}
-      </ul>
+    console.log(this.props.orders)
+    return this.props.orders && this.props.orders[0] ? (
+      this.props.orders.map(order => {
+        let date = new Date(order.updatedAt)
+        // date = `${date.getMonth()}/${date.getDay()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`
+
+        Date.parse()
+        return (
+          <div>
+            <h4> {`${date}`}</h4>
+            <table className="table table-striped" key={order.id}>
+              <thead>
+                <tr>
+                  <td>Product</td>
+                  <td>Price</td>
+                  <td>Quantity</td>
+                </tr>
+              </thead>
+              <tbody>
+                {order.products[0] && order.products[0].orderitems ? (
+                  order.products.map(product => {
+                    return (
+                      <tr key={product.key}>
+                        <td>{product.name}</td>
+                        <td>
+                          ${(product.orderitems.historicPrice / 100).toFixed(2)}
+                        </td>
+                        <td>{product.orderitems.quantity}</td>
+                      </tr>
+                    )
+                  })
+                ) : (
+                  <tr>No past order history. Saucify your life today!</tr>
+                )}
+              </tbody>
+            </table>
+            <h6> Total Price: ${(order.totalPrice / 100).toFixed(2)}</h6>
+            <br />
+            <br />
+          </div>
+        )
+      })
+    ) : (
+      <div> No orders to show</div>
     )
   }
 }
@@ -33,3 +67,5 @@ const mapDispatchToProps = dispatch => {
     getAllOrders: id => dispatch(getAllOrdersThunk(id))
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderHistory)

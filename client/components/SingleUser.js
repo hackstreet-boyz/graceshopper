@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {gotSingleUser} from '../store/user'
 
@@ -49,6 +50,7 @@ class SingleUser extends React.Component {
         <h2>
           {firstName} {lastName}
         </h2>
+        <Link to="/user/history">Order History</Link>
         <p>{email}</p>
         <p>{address}</p>
         <p>{phone}</p>
