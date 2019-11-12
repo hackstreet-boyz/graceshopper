@@ -26,9 +26,25 @@ class CheckoutForm extends Component {
     const {status} = response.data
     if (status === 'success') {
       this.setState({complete: true})
-      toast('Purchase successful!', {type: 'success'})
+      toast('🤙 Wow so easy!', {
+        type: 'success',
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      })
     } else {
-      toast('Something went wrong :(', {type: 'error'})
+      toast('Something went wrong :(', {
+        type: 'error',
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      })
     }
   }
 
