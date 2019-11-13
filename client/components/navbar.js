@@ -37,7 +37,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </a> */}
       </BootNav>
     ) : (
-      <BootNav bg="primary" variant="dark">
+      <BootNav bg="dark" variant="dark">
         {/* The navbar will show these links before you log in */}
         <Nav className="mr-auto">
           <Nav.Link href="/login">Login</Nav.Link>
