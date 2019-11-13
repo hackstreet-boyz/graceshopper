@@ -8,9 +8,11 @@ import AllProducts from './components/AllProducts'
 import Cart from './components/Cart'
 import {me} from './store'
 import SingleProduct from './components/SingleProduct'
+
 import ConfirmationPage from './components/Confirmation'
 import SingleUser from './components/SingleUser'
 import Checkout from './components/Checkout'
+import OrderHistory from './components/OrderHistory'
 
 /**
  * COMPONENT
@@ -33,11 +35,11 @@ class Routes extends Component {
         {/* <Route exact path="/cart/confirmation" component={ConfirmationPage} /> */}
         <Route exact path="/cart/confirmation" component={Checkout} />
         <Route exact path="/cart" component={Cart} />
-        <Route path="/users/:userId" component={SingleUser} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={AllProducts} />
+            <Route path="/users/:userId" component={SingleUser} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

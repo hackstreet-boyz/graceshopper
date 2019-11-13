@@ -16,7 +16,7 @@ const Product = db.define('products', {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue:
-      'https://uploads-ssl.webflow.com/56ba1ae8590c6fab210a6901/57167af6073ecab324e292e2_stock-products-cvr.jpg',
+      'https://www.jerkybyart.com/wp-content/uploads/2015/07/Tabasco-e1442362151667.jpg',
     validate: {
       isURL: true
     }
