@@ -35,7 +35,7 @@ async function seed() {
       brand: 'Tabasco Factories Unlimited',
       description: 'Not so hot, but very tasty!',
       imageUrl:
-        'https://images-na.ssl-images-amazon.com/images/I/81JsHMUAe1L._SL1500_.jpg',
+        'https://eatup.kitchen//wp-content/uploads/2017/09/Homemade-Tabasco-Sauce-04-320x321.jpg',
       category: 'Condiments',
       stock: 100
     }),
@@ -46,17 +46,18 @@ async function seed() {
       description:
         "Made in eastern Thailand, it's the finest hot sauce in the world",
       imageUrl:
-        'https://images-na.ssl-images-amazon.com/images/I/71Jsiqz0aiL._SX569_.jpg',
+        'https://timedotcom.files.wordpress.com/2017/12/sriracha-pizza-fight-leads-to-arrest.jpg?w=600&quality=85',
       category: 'Condiments',
       stock: 100
     }),
     Product.create({
       name: 'Soy Saunce',
       price: 3.99,
-      brand: 'Kikkoman Sauces',
-      description: 'I want it that way',
+      brand: 'The Hackstreets',
+      description:
+        'We import only the highest quality soy saunces. From the hackstreets.',
       imageUrl:
-        'https://duetogsaij514.cloudfront.net/images/products/4/LN_034687_BP_4.jpg',
+        'https://s3.amazonaws.com/jconline/jc_soysauce_general_860-560.jpg',
       category: 'Cooking',
       stock: 100
     }),
@@ -64,9 +65,9 @@ async function seed() {
       name: 'Hoisin Sauce',
       price: 2.99,
       brand: 'Lee Kum Kee',
-      description: 'Show me the meaning of being lonely',
+      description: 'From the makers of the finest seafood sauce in the world',
       imageUrl:
-        'https://images-na.ssl-images-amazon.com/images/I/81uTQEEW1VL._SY550_.jpg',
+        'https://www.seriouseats.com/recipes/images/2012/01/20120116-188016-hoisin-sauce.jpg',
       category: 'Cooking',
       stock: 100
     }),
@@ -74,7 +75,7 @@ async function seed() {
       name: 'Lao gan ma',
       price: 4.99,
       brand: 'LAOGANMA',
-      description: "Oh my god we're back again",
+      description: "A classic, don't miss out on this limited time offer.",
       imageUrl:
         'https://images.food52.com/hyDzi7i-jMrrIjUD4KEmn4HIKVA=/2012x1340/0b33bd01-f865-4b0c-9ce9-6ea519af09ee--2019-0430_lao-gan-ma-chili-crisp_3x2_ty-mecham_001.jpg',
       category: 'Cooking',
@@ -84,7 +85,8 @@ async function seed() {
       name: 'Mala sauce',
       price: 4.99,
       brand: 'Lee Kum Kee',
-      description: 'As long as you love me',
+      description:
+        'For hotpot enthusiasts, this ready-to-go sauce can be used for any occasion.',
       imageUrl:
         'https://i1.wp.com/blog.themalamarket.com/wp-content/uploads/2018/02/home-hotpot-20.jpg?resize=1000%2C750&ssl=1',
       category: 'Cooking',
@@ -127,6 +129,57 @@ async function seed() {
       imageUrl:
         'https://www.foodiecrush.com/wp-content/uploads/2019/05/Tartar-Sauce-foodiecrush.com-026.jpg',
       description: '',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: `Halal White Sauce`,
+      price: 3.99,
+      brand: 'Halal',
+      description: `How is it made?`,
+      category: 'Cooking',
+      stock: 100,
+      imageUrl:
+        'https://static.wixstatic.com/media/54e267_942a5a3bf70d4a159d1a30a3747f73e0~mv2.png/v1/crop/x_0,y_99,w_621,h_1018/fill/w_346,h_567,al_c,usm_0.66_1.00_0.01/54e267_942a5a3bf70d4a159d1a30a3747f73e0~mv2.png'
+    }),
+    Product.create({
+      name: 'Hot Chicken Flavor Sauce',
+      price: 3.99,
+      brand: 'SamYang',
+      description: 'Famously used in the spicy noodle challenge',
+      category: 'Cooking',
+      stock: 100,
+      imageUrl:
+        'https://my-test-11.slatic.net/p/f873603550fa0cca31d99d4df5830c3e.jpg'
+    }),
+    Product.create({
+      name: 'Schezwan Sauce',
+      price: 9.99,
+      brand: 'McDonald',
+      description: `Rick's favorite sauce that can only be obtained in his memory`,
+      category: 'Cooking',
+      stock: 100,
+      imageUrl:
+        'https://cdn.vox-cdn.com/thumbor/F_aVdFuDhjEeONnqNnVjiELDfBo=/0x0:2048x1360/1200x800/filters:focal(861x517:1187x843)/cdn.vox-cdn.com/uploads/chorus_image/image/58827379/SzechuanMcD1.0.jpg'
+    }),
+    Product.create({
+      name: 'Cocktail Sauce',
+      price: 2.69,
+      brand: 'Heinz',
+      imageUrl:
+        'https://target.scene7.com/is/image/Target/GUEST_e0310664-1684-4d4b-a0fb-98817eeb946b?wid=588&amp;hei=588&amp;qlt=80&amp;fmt=webp',
+      description:
+        'Heinz Gluten-Free Original Cocktail Sauce with a great taste that the entire family is sure to love',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: 'Garlic Sauce',
+      price: 3.49,
+      brand: 'Heinz',
+      imageUrl: 'https://www.britishcornershop.co.uk/img/large/QWOP2399.jpg',
+      description:
+        'This tasty sauce is the perfect accompaniment to chicken and steak, and also tastes great on burgers and hot dogs. It comes in this handy top-down squeezy bottle so you can enjoy every last drop.',
       category: 'Cooking',
       stock: 100
     })

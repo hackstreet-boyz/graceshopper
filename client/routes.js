@@ -13,6 +13,7 @@ import ConfirmationPage from './components/Confirmation'
 import SingleUser from './components/SingleUser'
 import Checkout from './components/Checkout'
 import OrderHistory from './components/OrderHistory'
+import PageNotFound from './components/PageNotFound'
 
 /**
  * COMPONENT
@@ -40,10 +41,11 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={AllProducts} />
             <Route path="/users/:userId" component={SingleUser} />
+            <Route component={PageNotFound} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={PageNotFound} />
       </Switch>
     )
   }
