@@ -93,20 +93,20 @@ const CartTable = props => {
       </Button>
     </div>
   ) : (
-    <Table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Remove Item</th>
-        </tr>
-        <tr>
-          <img src="https://pics.me.me/when-you-accidentally-get-lost-in-the-sauce-5529064.png" />{' '}
-        </tr>
-      </thead>
-    </Table>
+    <div>
+      <Table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Remove Item</th>
+          </tr>
+        </thead>
+      </Table>
+      <img src="/don.png" width="70%" height="45%" />
+    </div>
   )
 }
 
