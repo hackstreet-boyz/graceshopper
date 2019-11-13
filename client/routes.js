@@ -12,6 +12,7 @@ import SingleProduct from './components/SingleProduct'
 import ConfirmationPage from './components/Confirmation'
 import SingleUser from './components/SingleUser'
 import Checkout from './components/Checkout'
+import OrderHistory from './components/OrderHistory'
 
 /**
  * COMPONENT

@@ -51,10 +51,11 @@ export const getItemsFromCart = user => {
   }
 }
 
-export const submitOrderThunk = user => {
+export const submitOrderThunk = (user, totalPrice) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/cart/${user.id}/order`)
+      console.log(totalPrice, 'IS WHAT TOTAL PRICE IS')
+      await axios.put(`/api/cart/${user.id}/order`, {totalPrice: totalPrice})
       const {data} = await axios.post(`/api/cart/${user.id}/order`)
       dispatch(gotItemsFromCart(data))
     } catch (error) {
