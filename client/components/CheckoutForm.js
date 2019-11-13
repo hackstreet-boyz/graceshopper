@@ -4,6 +4,25 @@ import axios from 'axios'
 import {toast} from 'react-toastify'
 toast.configure()
 
+const createOptions = () => {
+  return {
+    style: {
+      base: {
+        fontSize: '16px',
+        color: '#424770',
+        fontFamily: 'Open Sans, sans-serif',
+        letterSpacing: '0.025em',
+        '::placeholder': {
+          color: '#aab7c4'
+        }
+      },
+      invalid: {
+        color: '#c23d4b'
+      }
+    }
+  }
+}
+
 class CheckoutForm extends Component {
   constructor(props) {
     super(props)
@@ -20,7 +39,6 @@ class CheckoutForm extends Component {
   async submit(event) {
     event.preventDefault()
     let {token} = await this.props.stripe.createToken({name: 'Name'})
-    console.log('token:', token)
     const product = this.state.product
     const response = await axios.post('/api/charge', {token, product})
     const {status} = response.data
@@ -53,7 +71,7 @@ class CheckoutForm extends Component {
 
     return (
       <div className="checkout">
-        <CardElement />
+        <CardElement {...createOptions()} />
         <button type="submit" onClick={this.submit}>
           Purchase
         </button>

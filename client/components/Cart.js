@@ -83,7 +83,6 @@ class Cart extends React.Component {
     if (this.props.user.id) {
       this.props.decreaseQuantity(this.props.user, product.orderitems)
     } else {
-      console.log('guestCart:', this.state.guestCart)
       const newQuantity =
         this.state.guestCart[product.id].orderitems.quantity - 1
       if (newQuantity < 0) {
@@ -130,15 +129,13 @@ class Cart extends React.Component {
         <div>
           {this.renderRedirect()}
           <CartTable
+            handleSubmit={this.handleSubmit}
             cart={this.props.cart}
             item={this.props.item}
             increase={this.increase}
             decrease={this.decrease}
             remove={this.remove}
           />
-          <Button variant="primary" type="submit" onClick={this.handleSubmit}>
-            Checkout
-          </Button>
         </div>
       ) : null
     ) : (
@@ -170,7 +167,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getItemsFromCart: user => dispatch(getItemsFromCart(user)),
-    submitOrder: user => dispatch(submitOrderThunk(user)),
+    submitOrder: (user, totalPrice) =>
+      dispatch(submitOrderThunk(user, totalPrice)),
     increaseQuantity: (user, item) => dispatch(increaseQuantity(user, item)),
     decreaseQuantity: (user, item) => dispatch(decreaseQuantity(user, item)),
     removeItem: (user, item) => dispatch(removeItem(user, item))
