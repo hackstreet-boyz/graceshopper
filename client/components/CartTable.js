@@ -84,13 +84,13 @@ const CartTable = props => {
           </tr>
         </tbody>
       </Table>
-      <Button
+      {/* <Button
         variant="primary"
         type="submit"
         onClick={e => props.handleSubmit(e, totalPrice)}
       >
         Checkout
-      </Button>
+      </Button> */}
     </div>
   ) : (
     <div>
