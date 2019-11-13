@@ -1,4 +1,5 @@
 const router = require('express').Router()
+if (process.env.NODE_ENV !== 'production') require('../../secrets')
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 module.exports = router
 const uuid = require('uuid/v4')
