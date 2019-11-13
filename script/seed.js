@@ -34,6 +34,8 @@ async function seed() {
       price: 2,
       brand: 'Tabasco Factories Unlimited',
       description: 'Not so hot, but very tasty!',
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/81JsHMUAe1L._SL1500_.jpg',
       category: 'Condiments',
       stock: 100
     }),
@@ -43,6 +45,8 @@ async function seed() {
       brand: 'Huy Fong Foods',
       description:
         "Made in eastern Thailand, it's the finest hot sauce in the world",
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/71Jsiqz0aiL._SX569_.jpg',
       category: 'Condiments',
       stock: 100
     }),
@@ -51,6 +55,78 @@ async function seed() {
       price: 3.99,
       brand: 'Kikkoman Sauces',
       description: 'I want it that way',
+      imageUrl:
+        'https://duetogsaij514.cloudfront.net/images/products/4/LN_034687_BP_4.jpg',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: 'Hoisin Sauce',
+      price: 2.99,
+      brand: 'Lee Kum Kee',
+      description: 'Show me the meaning of being lonely',
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/81uTQEEW1VL._SY550_.jpg',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: 'Lao gan ma',
+      price: 4.99,
+      brand: 'LAOGANMA',
+      description: "Oh my god we're back again",
+      imageUrl:
+        'https://images.food52.com/hyDzi7i-jMrrIjUD4KEmn4HIKVA=/2012x1340/0b33bd01-f865-4b0c-9ce9-6ea519af09ee--2019-0430_lao-gan-ma-chili-crisp_3x2_ty-mecham_001.jpg',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: 'Mala sauce',
+      price: 4.99,
+      brand: 'Lee Kum Kee',
+      description: 'As long as you love me',
+      imageUrl:
+        'https://i1.wp.com/blog.themalamarket.com/wp-content/uploads/2018/02/home-hotpot-20.jpg?resize=1000%2C750&ssl=1',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: 'Baba Ghanoush',
+      price: 3.99,
+      brand: 'Luis Falafel Boys',
+      description: 'The best baba in town. Get it today before it runs out!',
+      imageUrl:
+        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-190605-babaghanoush-308-landscape-pf-1560443633.jpg?crop=0.668xw:1.00xh;0.0884xw,0.00255xh&resize=980:*',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: 'Garlic Hummus',
+      price: 1.99,
+      brand: 'Sabra',
+      imageUrl:
+        'https://www.seriouseats.com/recipes/images/2016/03/20160411-tahini-sauce-hummus-vegan-19-1500x1125.jpg',
+      description: '',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: 'Chimichurri',
+      price: 11.99,
+      brand: 'Gardels',
+      imageUrl:
+        'https://www.cookingclassy.com/wp-content/uploads/2019/06/chimichurri-14.jpg',
+      description: '',
+      category: 'Cooking',
+      stock: 100
+    }),
+    Product.create({
+      name: 'Tartar',
+      price: 23.23,
+      brand: 'Kraft',
+      imageUrl:
+        'https://www.foodiecrush.com/wp-content/uploads/2019/05/Tartar-Sauce-foodiecrush.com-026.jpg',
+      description: '',
       category: 'Cooking',
       stock: 100
     })
@@ -71,12 +147,42 @@ async function seed() {
     OrderItem.create({
       orderId: 1,
       productId: 1,
-      quantity: 99
+      quantity: 3
+    }),
+    OrderItem.create({
+      orderId: 1,
+      productId: 2,
+      quantity: 5
+    }),
+    OrderItem.create({
+      orderId: 1,
+      productId: 3,
+      quantity: 1
+    }),
+    OrderItem.create({
+      orderId: 1,
+      productId: 4,
+      quantity: 2
+    }),
+    OrderItem.create({
+      orderId: 1,
+      productId: 5,
+      quantity: 1
     }),
     OrderItem.create({
       orderId: 2,
       productId: 2,
-      quantity: 50
+      quantity: 1
+    }),
+    OrderItem.create({
+      orderId: 2,
+      productId: 4,
+      quantity: 2
+    }),
+    OrderItem.create({
+      orderId: 2,
+      productId: 6,
+      quantity: 3
     })
   ])
 
