@@ -47,7 +47,6 @@ class Cart extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    console.log('props:', this.props.cart)
     this.props.submitOrder(this.props.user)
     this.redirectFunc()
   }
@@ -78,7 +77,6 @@ class Cart extends React.Component {
     if (this.props.user.id) {
       this.props.decreaseQuantity(this.props.user, product.orderitems)
     } else {
-      console.log('guestCart:', this.state.guestCart)
       const newQuantity =
         this.state.guestCart[product.id].orderitems.quantity - 1
       if (newQuantity < 0) {
