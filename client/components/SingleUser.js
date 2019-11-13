@@ -94,6 +94,7 @@ class SingleUser extends React.Component {
         ) : (
           <div>
             <h1>Account</h1>
+            <Link to="/history">User History</Link>
             <h2>
               {firstName} {lastName}
             </h2>

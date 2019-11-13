@@ -46,9 +46,15 @@ class Cart extends React.Component {
   }
 
   handleSubmit(event, totalPrice) {
-    event.preventDefault()
-    this.props.submitOrder(this.props.user)
-    this.redirectFunc()
+    if (this.props.user.id) {
+      event.preventDefault()
+      console.log('props:', this.props.cart)
+      this.props.submitOrder(this.props.user, totalPrice)
+      this.redirectFunc()
+    } else {
+      window.localStorage.clear()
+      this.redirectFunc()
+    }
   }
 
   increase(product) {
@@ -142,9 +148,9 @@ class Cart extends React.Component {
           decrease={this.decrease}
           remove={this.remove}
         />
-        {/* <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+        <Button variant="primary" type="submit" onClick={this.handleSubmit}>
           Checkout
-        </Button> */}
+        </Button>
       </div>
     )
   }
