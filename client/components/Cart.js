@@ -45,11 +45,11 @@ class Cart extends React.Component {
     }
   }
 
-  handleSubmit(event) {
+  handleSubmit(event, totalPrice) {
     if (this.props.user.id) {
       event.preventDefault()
       console.log('props:', this.props.cart)
-      this.props.submitOrder(this.props.user)
+      this.props.submitOrder(this.props.user, totalPrice)
       this.redirectFunc()
     } else {
       window.localStorage.clear()
