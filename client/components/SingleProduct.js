@@ -64,21 +64,28 @@ class SingleProduct extends React.Component {
     } = this.props.singleProduct
 
     return this.props.singleProduct ? (
-      <div>
-        <h1>{name}</h1>
-        <img src={imageUrl} height="150" width="150" />
-        <p>{price}</p>
-        <p>{brand}</p>
-        <p>{description}</p>
-        <p>{category}</p>
-        <button
-          type="button"
-          onClick={
-            this.props.isLoggedIn ? this.handleSubmit : this.guestCartAdd
-          }
-        >
-          ADD ITEM
-        </button>
+      <div className="d-flex flex-row">
+        <div className="flex-item card text-center">
+          <h1>{name}</h1>
+
+          <p>
+            {' '}
+            <img src={imageUrl} height="150" width="150" /> <br /> <br />
+            ${(price / 100).toFixed(2)}
+          </p>
+          <p>{brand}</p>
+          <p>{description}</p>
+          <p>{category}</p>
+          <button
+            type="button"
+            onClick={
+              this.props.isLoggedIn ? this.handleSubmit : this.guestCartAdd
+            }
+          >
+            ADD ITEM
+          </button>
+        </div>
+        <div className="flex-item" />
       </div>
     ) : null
   }
