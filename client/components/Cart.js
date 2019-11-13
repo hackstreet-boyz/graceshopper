@@ -142,9 +142,9 @@ class Cart extends React.Component {
           decrease={this.decrease}
           remove={this.remove}
         />
-        <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+        {/* <Button variant="primary" type="submit" onClick={this.handleSubmit}>
           Checkout
-        </Button>
+        </Button> */}
       </div>
     )
   }
