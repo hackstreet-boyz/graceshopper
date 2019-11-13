@@ -46,10 +46,15 @@ class Cart extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault()
-    console.log('props:', this.props.cart)
-    this.props.submitOrder(this.props.user)
-    this.redirectFunc()
+    if (this.props.user.id) {
+      event.preventDefault()
+      console.log('props:', this.props.cart)
+      this.props.submitOrder(this.props.user)
+      this.redirectFunc()
+    } else {
+      window.localStorage.clear()
+      this.redirectFunc()
+    }
   }
 
   increase(product) {
