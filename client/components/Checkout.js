@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
 
+if (process.env.NODE_ENV !== 'production') require('../../secrets')
+
 class Checkout extends Component {
   render() {
     return (
